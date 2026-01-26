@@ -1,0 +1,100 @@
+/* Notification Toasts */
+.toast-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    left: auto;
+    z-index: 99999;
+    min-width: 180px;
+    max-width: 90vw;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.toast-notification.success {
+    background: #00E676;
+    color: #000;
+    /* Dark text for better contrast on bright green */
+    box-shadow: 0 6px 20px rgba(0, 230, 118, 0.4);
+}
+
+.toast-notification.error {
+    background: #FF3D00;
+    box-shadow: 0 4px 20px rgba(255, 61, 0, 0.4);
+}
+
+.toast-notification.info {
+    background: #2D9CDB;
+    box-shadow: 0 4px 20px rgba(45, 156, 219, 0.4);
+}
+
+.toast-notification .content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.toast-notification svg {
+    flex-shrink: 0;
+}
+
+@media (max-width: 576px) {
+    .toast-notification .content-wrapper {
+        gap: 0.5rem;
+    }
+}
+
+.toast-notification .close-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    /* Inherit text color (black for success, white for others) */
+    font-size: 1.5rem;
+    margin-left: auto;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 0 0 10px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.toast-notification .close-btn:hover {
+    opacity: 1;
+}
+
+/* Mobile Responsiveness for Toasts */
+@media (max-width: 576px) {
+    .toast-notification {
+        top: 15px;
+        right: 15px;
+        left: 15px;
+        min-width: auto;
+        width: auto;
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+        border-radius: 12px;
+        /* Less rounded for better space utilization on mobile */
+    }
+
+    .toast-notification svg {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+    }
+}

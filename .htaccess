@@ -1,0 +1,40 @@
+# PK Automations Production Configuration
+Options -Indexes
+DirectoryIndex index.php
+
+# Handle WebP Mime Type
+<IfModule mod_mime.c>
+    AddType image/webp .webp
+</IfModule>
+
+# Protection for sensitive files
+<FilesMatch "^\.env|composer\.(json|lock)|.*\.sql|README\.md|ADMIN_README\.md">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Protection for system folders
+<DirectoryMatch "^(logs|includes|migrations)">
+    Order allow,deny
+    Deny from all
+</DirectoryMatch>
+
+# Rewrite Engine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Sitemap XML Redirect
+    RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+    # Force HTTPS (Uncomment after SSL is active)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-Content-Type-Options "nosniff"
+</IfModule>

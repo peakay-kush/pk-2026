@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and private includes
+Disallow: /admin/
+Disallow: /includes/
+Disallow: /vendor/
+Disallow: /database/
+Disallow: /logs/
+
+# Sitemap location (Dynamic PHP Sitemap)
+Sitemap: https://pkautomations.co.ke/sitemap.php
