@@ -12,7 +12,7 @@
                 <p class="text-light opacity-75 pe-lg-5"
                     style="font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.8;">
                     Your trusted partner in electronics, automation, and innovation. Quality products and expert
-                    services since 2015.
+                    services since 2025.
                 </p>
                 <div class="social-links mt-4">
                     <a href="#" class="social-circle"><i class="fab fa-facebook-f"></i></a>
@@ -66,7 +66,7 @@
                     <li class="mb-4 d-flex align-items-center">
                         <span class="footer-contact-icon"><i class="fas fa-envelope"></i></span>
                         <span class="text-light opacity-75"
-                            style="font-family: 'Plus Jakarta Sans', sans-serif;">pk.automations.ke@gmail.com</span>
+                            style="font-family: 'Plus Jakarta Sans', sans-serif;">info@pkautomations.co.ke</span>
                     </li>
                     <li class="mb-4 d-flex align-items-center">
                         <span class="footer-contact-icon"><i class="fas fa-clock"></i></span>

@@ -97,7 +97,7 @@ $cart_count = getCartItemCount();
                         </table>
                     </div>
 
-                    <div class="d-flex justify-content-between align-items-center mt-4 mb-5">
+                    <div class="d-flex justify-content-between align-items-center mt-4 mb-5 cart-action-buttons">
                         <a href="shop.php" class="btn btn-outline-primary">
                             <i class="fas fa-arrow-left me-2"></i> Continue Shopping
                         </a>

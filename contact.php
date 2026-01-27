@@ -153,7 +153,7 @@ require_once 'includes/header.php';
                                     style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.2rem;">
                                     Email</h5>
                                 <p style="margin: 0; font-size: 1rem; font-weight: 500;">
-                                    pk.automations.ke@gmail.com</p>
+                                    info@pkautomations.co.ke</p>
                                 <p class="text-muted" style="margin: 0; font-size: 0.85rem;">We reply within 24 hours
                                 </p>
                             </div>

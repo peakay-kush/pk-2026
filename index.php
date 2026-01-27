@@ -1,6 +1,4 @@
 <?php
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
 $page_title = 'Home';
 $page_description = 'PK Automations - Premier provider of electronics, industrial automation, and professional technical services in Limuru, Kenya.';
 require_once 'includes/header.php';

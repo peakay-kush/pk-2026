@@ -101,35 +101,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_method'])) {
             $shipping_details .= "<p><strong>Location:</strong> " . $shipping_name . " (KSh " . number_format($shipping_fee, 2) . ")</p>";
 
             // Send Confirmation Email to User
-            $user_subject = "Order Confirmation - #" . $order_id;
-            $user_message = "<h2>Thank you for your order!</h2>";
-            $user_message .= "<p>Your order #" . $order_id . " has been placed successfully.</p>";
-            $user_message .= "<h3>Order Items:</h3>";
-            $user_message .= "<ul>";
+            $user_subject = "Order Confirmed! - PK Automations #" . $order_id;
+            $user_message = "<div style='font-family: sans-serif; max-width: 600px; margin: auto; border: 1px solid #eee; padding: 20px; border-radius: 10px;'>";
+            $user_message .= "<h2 style='color: #0B63CE;'>Thank you for your order!</h2>";
+            $user_message .= "<p>Hi " . htmlspecialchars($name) . ", your order <strong>#" . $order_id . "</strong> has been placed successfully.</p>";
+            $user_message .= "<h3>Order Summary:</h3>";
+            $user_message .= "<ul style='list-style: none; padding: 0;'>";
             foreach ($cart_items as $item) {
-                $user_message .= "<li>" . htmlspecialchars($item['name']) . " x " . $item['quantity'] . "</li>";
+                $user_message .= "<li style='padding: 10px 0; border-bottom: 1px solid #eee;'>" . htmlspecialchars($item['name']) . " <span style='float: right;'>x " . $item['quantity'] . "</span></li>";
             }
             $user_message .= "</ul>";
-            $user_message .= $shipping_details;
-            $user_message .= "<p><strong>Grand Total:</strong> " . formatPrice($grand_total) . "</p>";
-            $user_message .= "<p><strong>Payment Method:</strong> " . ucfirst($payment_method) . "</p>";
-            $user_message .= "<p>We will notify you once your order is dispatched.</p>";
+            $user_message .= "<div style='background: #f9f9f9; padding: 15px; border-radius: 8px; margin-top: 20px;'>";
+            $user_message .= "<strong>Shipping To:</strong><br>";
+            $user_message .= htmlspecialchars($address_line) . ", " . htmlspecialchars($street) . "<br>";
+            $user_message .= htmlspecialchars($city) . "<br>Phone: " . htmlspecialchars($phone);
+            $user_message .= "</div>";
+            $user_message .= "<p style='font-size: 1.2rem;'><strong>Total Paid: " . formatPrice($grand_total) . "</strong></p>";
+            $user_message .= "<p>Payment Method: " . ucfirst($payment_method) . "</p>";
+            $user_message .= "<hr><p style='color: #666; font-size: 0.8rem;'>PK Automations - Innovate. Automate. Elevate.</p></div>";
             sendEmail($email, $user_subject, $user_message);
 
             // Send Notification Email to Admin
-            $admin_subject = "New Order Received - #" . $order_id;
-            $admin_message = "<h2>New Order Details</h2>";
-            $admin_message .= "<p><strong>Order ID:</strong> #" . $order_id . "</p>";
-            $admin_message .= "<p><strong>Customer:</strong> " . $name . "</p>";
-            $admin_message .= "<p><strong>Email:</strong> " . $email . "</p>";
-            $admin_message .= "<h3>Order Items:</h3><ul>";
+            $admin_subject = "NEW ORDER ALERT! [#" . $order_id . "] - " . $name;
+            $admin_message = "<div style='font-family: sans-serif; border: 2px solid #0B63CE; padding: 25px; border-radius: 10px;'>";
+            $admin_message .= "<h1 style='color: #0B63CE; margin-top: 0;'>🚀 New Order Received!</h1>";
+            $admin_message .= "<p style='font-size: 1.1rem;'><strong>Order ID:</strong> #" . $order_id . "</p>";
+            $admin_message .= "<p><strong>Customer:</strong> " . htmlspecialchars($name) . " (" . htmlspecialchars($email) . ")</p>";
+            $admin_message .= "<h3>Items Ordered:</h3><ul style='background: #f4f4f4; padding: 20px; border-radius: 8px;'>";
             foreach ($cart_items as $item) {
-                $admin_message .= "<li>" . htmlspecialchars($item['name']) . " (Qty: " . $item['quantity'] . ")</li>";
+                $admin_message .= "<li>" . htmlspecialchars($item['name']) . " (Qty: " . $item['quantity'] . ") - " . formatPrice($item['price']) . " each</li>";
             }
             $admin_message .= "</ul>";
-            $admin_message .= $shipping_details;
-            $admin_message .= "<p><strong>Grand Total:</strong> " . formatPrice($grand_total) . "</p>";
-            $admin_message .= "<p><strong>Payment Method:</strong> " . ucfirst($payment_method) . "</p>";
+            $admin_message .= "<h3>Shipping Address:</h3>";
+            $admin_message .= "<p>" . htmlspecialchars($address_line) . ", " . htmlspecialchars($street) . ", " . htmlspecialchars($city) . "<br>Tel: " . htmlspecialchars($phone) . "</p>";
+            $admin_message .= "<p><strong>Grand Total: " . formatPrice($grand_total) . "</strong></p>";
+            $admin_message .= "<p><strong>Payment Method:</strong> " . strtoupper($payment_method) . "</p>";
+            $admin_message .= "<div style='margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;'>";
+            $admin_message .= "<a href='" . SITE_URL . "/admin/' style='background: #0B63CE; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;'>GO TO ADMIN PANEL</a>";
+            $admin_message .= "</div></div>";
             sendEmail(ADMIN_EMAIL, $admin_subject, $admin_message);
 
             $conn->commit();
@@ -163,7 +172,7 @@ require_once 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="d-flex align-items-center justify-content-between mb-4">
+                <div class="checkout-header d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
                     <h2 class="h3 fw-bold mb-0">Checkout</h2>
                     <a href="cart.php" class="btn btn-outline-primary btn-sm rounded-pill px-4">
                         <i class="fas fa-arrow-left me-2"></i>Back to Cart

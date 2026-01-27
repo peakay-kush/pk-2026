@@ -148,20 +148,46 @@ function sendEmail($to, $subject, $message)
     $autoload = __DIR__ . '/../vendor/autoload.php';
     if (file_exists($autoload)) {
         require_once $autoload;
-    } else {
-        error_log('PHPMailer autoload not found');
-        return false;
+    }
+
+    // Manual fallback if classes still not found (common on some shared hosts/FTP issues)
+    if (!class_exists('PHPMailer\PHPMailer\PHPMailer')) {
+        $search_paths = [
+            __DIR__ . '/../vendor/phpmailer/phpmailer/src/',
+            __DIR__ . '/../vendor/PHPMailer/phpmailer/src/',
+            __DIR__ . '/../vendor/PHPMailer/phpmailer/phpmailer/src/',
+            __DIR__ . '/../vendor/PHPMailer/src/'
+        ];
+
+        foreach ($search_paths as $path) {
+            if (file_exists($path . 'PHPMailer.php')) {
+                require_once $path . 'Exception.php';
+                require_once $path . 'PHPMailer.php';
+                require_once $path . 'SMTP.php';
+                break;
+            }
+        }
     }
 
     $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
     try {
+        // --- Server Settings ---
         $mail->isSMTP();
         $mail->Host = $_ENV['EMAIL_HOST'] ?? 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = $_ENV['EMAIL_USERNAME'] ?? '';
         $mail->Password = $_ENV['EMAIL_PASSWORD'] ?? '';
 
-        $port = (int) ($_ENV['EMAIL_PORT'] ?? 465);
+        // Force IPv4 if host has issues with IPv6 (common for Network unreachable errors)
+        $mail->SMTPOptions = [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            ]
+        ];
+
+        $port = (int) ($_ENV['EMAIL_PORT'] ?? 587); // Default to 587 as it's more compatible
         $mail->Port = $port;
 
         if ($port === 465) {
@@ -179,7 +205,11 @@ function sendEmail($to, $subject, $message)
         $mail->send();
         return true;
     } catch (\PHPMailer\PHPMailer\Exception $e) {
-        error_log('Mail error: ' . $e->getMessage());
+        error_log('PHPMailer Error: ' . $e->getMessage());
+        error_log('PHPMailer Debug Info: ' . $mail->ErrorInfo);
+        return false;
+    } catch (Exception $e) {
+        error_log('General Mail Error: ' . $e->getMessage());
         return false;
     }
 }
