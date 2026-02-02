@@ -19,6 +19,9 @@ DirectoryIndex index.php
     Deny from all
 </DirectoryMatch>
 
+# Custom Error Page
+ErrorDocument 404 /404.php
+
 # Rewrite Engine
 <IfModule mod_rewrite.c>
     RewriteEngine On
@@ -27,20 +30,14 @@ DirectoryIndex index.php
     # Sitemap XML Redirect
     RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
-    # Clean URLs for Products: /product/slug-name
-    RewriteRule ^product/([a-zA-Z0-9_-]+)$ product.php?slug=$1 [L,QSA]
+    # Force HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-    # Clean URLs for Tutorials: /tutorial/slug-name
-    RewriteRule ^tutorial/([a-zA-Z0-9_-]+)$ tutorial.php?slug=$1 [L,QSA]
-
-    # Remove .php extension from URLs
+    # Clean URLs (Remove .php extension)
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME}\.php -f
+    RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^([^\.]+)$ $1.php [NC,L]
-
-    # Force HTTPS (Uncomment after SSL is active)
-    # RewriteCond %{HTTPS} off
-    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
 
 # Security Headers

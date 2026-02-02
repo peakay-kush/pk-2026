@@ -36,7 +36,7 @@ foreach ($cart as $product_id => $quantity) {
 
 // Redirect if cart is empty
 if (empty($cart_items)) {
-    header('Location: shop.php');
+    header('Location: shop');
     exit;
 }
 
@@ -144,12 +144,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_method'])) {
             $conn->commit();
             $_SESSION['cart'] = [];
             $_SESSION['order_success'] = true;
-            header('Location: dashboard.php?section=orders');
+            header('Location: dashboard?section=orders');
             exit;
         } catch (Exception $e) {
             $conn->rollBack();
             error_log('Order placement failed: ' . $e->getMessage());
-            header('Location: checkout.php?error=1');
+            header('Location: checkout?error=1');
             exit;
         }
     }
@@ -174,7 +174,7 @@ require_once 'includes/header.php';
 
                 <div class="checkout-header d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
                     <h2 class="h3 fw-bold mb-0">Checkout</h2>
-                    <a href="cart.php" class="btn btn-outline-primary btn-sm rounded-pill px-4">
+                    <a href="cart" class="btn btn-outline-primary btn-sm rounded-pill px-4">
                         <i class="fas fa-arrow-left me-2"></i>Back to Cart
                     </a>
                 </div>
@@ -276,7 +276,7 @@ require_once 'includes/header.php';
                         <?php else: ?>
                             <div class="alert alert-warning">
                                 <i class="fas fa-exclamation-triangle me-2"></i> No delivery address found.
-                                <a href="dashboard.php?section=addresses" class="alert-link">Add an Address</a>
+                                <a href="dashboard?section=addresses" class="alert-link">Add an Address</a>
                             </div>
                         <?php endif; ?>
                     </div>

@@ -15,7 +15,7 @@ if (isset($_POST['update_status'])) {
 
     $_SESSION['flash_message'] = 'Payment status updated successfully!';
     $_SESSION['flash_type'] = 'success';
-    header('Location: payments.php');
+    header('Location: payments');
     exit;
 }
 
@@ -112,7 +112,7 @@ $completed_payments = count(array_filter($payments, fn($p) => $p['payment_status
                                 <tr>
                                     <td>#<?php echo $payment['id']; ?></td>
                                     <td>
-                                        <a href="orders.php?view=<?php echo $payment['order_id']; ?>"
+                                        <a href="orders?view=<?php echo $payment['order_id']; ?>"
                                             class="text-decoration-none">
                                             #<?php echo $payment['order_id']; ?>
                                         </a>

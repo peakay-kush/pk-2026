@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_member'])) {
         if (!in_array($file_type, $allowed_types)) {
             $_SESSION['flash_message'] = 'Invalid file type. Only JPG, PNG, GIF, and WEBP allowed.';
             $_SESSION['flash_type'] = 'error';
-            header('Location: team_members.php');
+            header('Location: team_members');
             exit;
         }
 
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_member'])) {
         } else {
             $_SESSION['flash_message'] = 'Failed to upload image. Check directory permissions.';
             $_SESSION['flash_type'] = 'error';
-            header('Location: team_members.php');
+            header('Location: team_members');
             exit;
         }
     }
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_member'])) {
         if (!$image_path) {
             $_SESSION['flash_message'] = 'Please upload an image for the team member.';
             $_SESSION['flash_type'] = 'error';
-            header('Location: team_members.php');
+            header('Location: team_members');
             exit;
         }
 
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_member'])) {
     }
 
     $_SESSION['flash_type'] = 'success';
-    header('Location: team_members.php');
+    header('Location: team_members');
     exit;
 }
 
@@ -111,7 +111,7 @@ if (isset($_GET['delete'])) {
 
     $_SESSION['flash_message'] = 'Team member deleted';
     $_SESSION['flash_type'] = 'success';
-    header('Location: team_members.php');
+    header('Location: team_members');
     exit;
 }
 
@@ -132,16 +132,11 @@ if (isset($_GET['edit'])) {
 ?>
 
 <div class="container-fluid py-3">
-    <div class="row mb-4">
-        <div class="col">
-            <h2><i class="fas fa-users me-2"></i>Team Members</h2>
-        </div>
-        <div class="col-auto">
-            <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal"
-                data-bs-target="#addMemberModal">
-                <i class="fas fa-plus me-2"></i>Add Team Member
-            </button>
-        </div>
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <h2 class="page-title mb-0"><i class="fas fa-users me-2"></i>Team Members</h2>
+        <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+            <i class="fas fa-plus me-2"></i>Add Team Member
+        </button>
     </div>
 
     <?php if (count($members) == 0): ?>
@@ -175,13 +170,13 @@ if (isset($_GET['edit'])) {
                         <div class="card-footer bg-white">
                             <div class="row g-2">
                                 <div class="col-6">
-                                    <a href="team_members.php?edit=<?php echo $member['id']; ?>"
+                                    <a href="team_members?edit=<?php echo $member['id']; ?>"
                                         class="btn btn-outline-primary w-100">
                                         <i class="fas fa-edit"></i> Edit
                                     </a>
                                 </div>
                                 <div class="col-6">
-                                    <a href="team_members.php?delete=<?php echo $member['id']; ?>&csrf_token=<?php echo generateCSRFToken(); ?>"
+                                    <a href="team_members?delete=<?php echo $member['id']; ?>&csrf_token=<?php echo generateCSRFToken(); ?>"
                                         class="btn btn-outline-danger w-100"
                                         onclick="return confirm('Delete <?php echo htmlspecialchars($member['name']); ?>?');">
                                         <i class="fas fa-trash"></i> Delete

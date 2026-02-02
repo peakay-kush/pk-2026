@@ -410,7 +410,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.nav-badge').forEach(badge => {
             // Check if this is the cart badge by checking parent's href or icon
             const parent = badge.closest('a');
-            if (parent && parent.getAttribute('href').includes('cart.php')) {
+            if (parent && parent.getAttribute('href').includes('cart')) {
                 badge.textContent = count;
                 if (count > 0) {
                     badge.style.display = 'flex'; // Flex to center content
@@ -427,7 +427,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateFavoritesCount(count) {
         document.querySelectorAll('.nav-badge').forEach(badge => {
             const parent = badge.closest('a');
-            if (parent && parent.getAttribute('href').includes('favorites.php')) {
+            if (parent && parent.getAttribute('href').includes('favorites')) {
                 badge.textContent = count;
                 if (count > 0) {
                     badge.style.display = 'flex';

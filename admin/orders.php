@@ -73,7 +73,7 @@ if (isset($_GET['update_status'])) {
             $_SESSION['flash_message'] = 'Order status updated and notification sent';
             $_SESSION['flash_type'] = 'success';
         }
-        header('Location: orders.php');
+        header('Location: orders');
         exit;
     }
 }
@@ -96,7 +96,7 @@ $query_sql = "
 $orders_stmt = $conn->query($query_sql);
 ?>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
     <h2 class="page-title mb-0"><i class="fas fa-shopping-cart"></i> Manage Orders</h2>
 </div>
 
@@ -105,18 +105,18 @@ $orders_stmt = $conn->query($query_sql);
         <h5 class="mb-0"><i class="fas fa-list"></i> All Orders</h5>
     </div>
     <div class="card-body">
-        <div class="mb-4">
-            <a href="orders.php" class="btn btn-outline-primary <?php echo !$status_filter ? 'active' : ''; ?>">All
+        <div class="mb-4 d-flex flex-wrap gap-2">
+            <a href="orders" class="btn btn-outline-primary <?php echo !$status_filter ? 'active' : ''; ?>">All
                 Orders</a>
-            <a href="orders.php?status=pending"
+            <a href="orders?status=pending"
                 class="btn btn-outline-warning <?php echo $status_filter == 'pending' ? 'active' : ''; ?>">Pending</a>
-            <a href="orders.php?status=paid"
+            <a href="orders?status=paid"
                 class="btn btn-outline-success <?php echo $status_filter == 'paid' ? 'active' : ''; ?>">Paid</a>
-            <a href="orders.php?status=dispatched"
+            <a href="orders?status=dispatched"
                 class="btn btn-outline-info <?php echo $status_filter == 'dispatched' ? 'active' : ''; ?>">Dispatched</a>
-            <a href="orders.php?status=complete"
+            <a href="orders?status=complete"
                 class="btn btn-outline-primary <?php echo $status_filter == 'complete' ? 'active' : ''; ?>">Complete</a>
-            <a href="orders.php?status=cancelled"
+            <a href="orders?status=cancelled"
                 class="btn btn-outline-danger <?php echo $status_filter == 'cancelled' ? 'active' : ''; ?>">Cancelled</a>
         </div>
         <div class="table-responsive">
@@ -157,7 +157,7 @@ $orders_stmt = $conn->query($query_sql);
                                 </td>
                                 <td><?php echo formatDate($order['created_at']); ?></td>
                                 <td class="text-nowrap">
-                                    <a href="order_view.php?id=<?php echo $order['id']; ?>" class="btn btn-sm btn-primary me-2">
+                                    <a href="order_view?id=<?php echo $order['id']; ?>" class="btn btn-sm btn-primary me-2">
                                         <i class="fas fa-eye"></i> View
                                     </a>
                                     <button type="button" class="btn btn-sm btn-info" data-bs-toggle="collapse"
@@ -169,15 +169,15 @@ $orders_stmt = $conn->query($query_sql);
                             <tr class="collapse" id="statusMenu<?php echo $order['id']; ?>">
                                 <td colspan="7" class="p-0">
                                     <div class="list-group list-group-flush">
-                                        <a href="orders.php?update_status=<?php echo $order['id']; ?>&status=pending&csrf_token=<?php echo generateCSRFToken(); ?>"
+                                        <a href="orders?update_status=<?php echo $order['id']; ?>&status=pending&csrf_token=<?php echo generateCSRFToken(); ?>"
                                             class="list-group-item list-group-item-action">Mark Pending</a>
-                                        <a href="orders.php?update_status=<?php echo $order['id']; ?>&status=paid&csrf_token=<?php echo generateCSRFToken(); ?>"
+                                        <a href="orders?update_status=<?php echo $order['id']; ?>&status=paid&csrf_token=<?php echo generateCSRFToken(); ?>"
                                             class="list-group-item list-group-item-action">Mark Paid</a>
-                                        <a href="orders.php?update_status=<?php echo $order['id']; ?>&status=dispatched&csrf_token=<?php echo generateCSRFToken(); ?>"
+                                        <a href="orders?update_status=<?php echo $order['id']; ?>&status=dispatched&csrf_token=<?php echo generateCSRFToken(); ?>"
                                             class="list-group-item list-group-item-action">Mark Dispatched</a>
-                                        <a href="orders.php?update_status=<?php echo $order['id']; ?>&status=complete&csrf_token=<?php echo generateCSRFToken(); ?>"
+                                        <a href="orders?update_status=<?php echo $order['id']; ?>&status=complete&csrf_token=<?php echo generateCSRFToken(); ?>"
                                             class="list-group-item list-group-item-action">Mark Complete</a>
-                                        <a href="orders.php?update_status=<?php echo $order['id']; ?>&status=cancelled&csrf_token=<?php echo generateCSRFToken(); ?>"
+                                        <a href="orders?update_status=<?php echo $order['id']; ?>&status=cancelled&csrf_token=<?php echo generateCSRFToken(); ?>"
                                             class="list-group-item list-group-item-action">Mark Cancelled</a>
                                     </div>
                                 </td>

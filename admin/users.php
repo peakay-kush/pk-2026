@@ -18,7 +18,7 @@ if (isset($_GET['update_role'])) {
         $stmt->execute([$role, $user_id]);
         $_SESSION['flash_message'] = 'User role updated';
         $_SESSION['flash_type'] = 'success';
-        header('Location: users.php');
+        header('Location: users');
         exit;
     }
 }
@@ -67,10 +67,10 @@ $users = $conn->query("SELECT * FROM users ORDER BY created_at DESC");
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item"
-                                                    href="users.php?update_role=<?php echo $user['id']; ?>&role=user&csrf_token=<?php echo generateCSRFToken(); ?>">Make
+                                                    href="users?update_role=<?php echo $user['id']; ?>&role=user&csrf_token=<?php echo generateCSRFToken(); ?>">Make
                                                     User</a></li>
                                             <li><a class="dropdown-item"
-                                                    href="users.php?update_role=<?php echo $user['id']; ?>&role=admin&csrf_token=<?php echo generateCSRFToken(); ?>">Make
+                                                    href="users?update_role=<?php echo $user['id']; ?>&role=admin&csrf_token=<?php echo generateCSRFToken(); ?>">Make
                                                     Admin</a></li>
                                         </ul>
                                     </div>

@@ -106,7 +106,7 @@ try {
                                 <i class="fas fa-database"></i> Database Manager
                             </a>
                         <?php endif; ?>
-                        <a href="<?php echo SITE_URL; ?>/logout.php"
+                        <a href="<?php echo SITE_URL; ?>/logout"
                             class="list-group-item list-group-item-action text-danger">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
@@ -271,7 +271,7 @@ try {
                             <!-- Security -->
                             <div class="settings-section mb-4">
                                 <h6><i class="fas fa-shield-alt"></i> Security</h6>
-                                <a href="password_reset_request.php" class="btn btn-outline-primary mt-2">
+                                <a href="password_reset_request" class="btn btn-outline-primary mt-2">
                                     <i class="fas fa-key"></i> Change Password
                                 </a>
                             </div>
@@ -372,7 +372,7 @@ try {
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        <a href="order_details.php?id=<?php echo $order['id']; ?>"
+                                                        <a href="order_details?id=<?php echo $order['id']; ?>"
                                                             class="btn btn-sm btn-outline-primary">
                                                             <i class="fas fa-eye"></i> View
                                                         </a>
@@ -387,7 +387,7 @@ try {
                                     <i class="fas fa-shopping-bag text-muted" style="font-size: 4rem;"></i>
                                     <h4 class="mt-3">No Orders Yet</h4>
                                     <p class="text-muted">Start shopping to see your orders here</p>
-                                    <a href="shop.php" class="btn btn-primary">Browse Products</a>
+                                    <a href="shop" class="btn btn-primary">Browse Products</a>
                                 </div>
                             <?php endif; ?>
                         </div>

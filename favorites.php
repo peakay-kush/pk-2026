@@ -85,7 +85,7 @@ if (!empty($_SESSION['favorites'])) {
                                             <i class="fas fa-cart-plus"></i> Add to Cart
                                         </a>
                                     <?php endif; ?>
-                                    <a href="product.php?slug=<?php echo urlencode($product['slug']); ?>" class="btn"
+                                    <a href="product/<?php echo urlencode($product['slug']); ?>" class="btn"
                                         style="border: 2px solid #00E676; color: #00E676; background: white; padding: 0.65rem 1.5rem;">
                                         View
                                     </a>
@@ -104,7 +104,7 @@ if (!empty($_SESSION['favorites'])) {
                 <i class="far fa-heart" style="font-size: 4rem; color: #ccc; margin-bottom: 1rem;"></i>
                 <h3>No Favorites Yet</h3>
                 <p class="text-muted mb-4">Start adding products to your favorites list</p>
-                <a href="shop.php" class="btn" style="background-color: #00E676; color: white; padding: 0.75rem 2rem;">
+                <a href="shop" class="btn" style="background-color: #00E676; color: white; padding: 0.75rem 2rem;">
                     Browse Products
                 </a>
             </div>

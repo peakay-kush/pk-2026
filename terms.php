@@ -58,7 +58,7 @@ require_once 'includes/header.php';
                         </div>
 
                         <div class="text-center mt-5">
-                            <a href="register.php" class="btn btn-primary">
+                            <a href="register" class="btn btn-primary">
                                 <i class="fas fa-arrow-left"></i> Back to Registration
                             </a>
                         </div>

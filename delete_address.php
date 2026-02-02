@@ -12,7 +12,7 @@ if (isset($_GET['id'])) {
 
     if (!verifyCSRFToken($_GET['csrf_token'] ?? '')) {
         setFlashMessage('Invalid security token. Please try again.', 'error');
-        header('Location: dashboard.php?section=addresses');
+        header('Location: dashboard?section=addresses');
         exit;
     }
     try {
@@ -40,6 +40,6 @@ if (isset($_GET['id'])) {
     }
 }
 
-header('Location: dashboard.php?section=addresses');
+header('Location: dashboard?section=addresses');
 exit;
 ?>

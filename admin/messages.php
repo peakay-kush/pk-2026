@@ -14,7 +14,7 @@ if (isset($_GET['delete'])) {
     $conn->query("DELETE FROM contact_messages WHERE id = $id");
     $_SESSION['flash_message'] = 'Message deleted successfully';
     $_SESSION['flash_type'] = 'success';
-    header('Location: messages.php');
+    header('Location: messages');
     exit;
 }
 
@@ -68,7 +68,7 @@ $messages = $conn->query("SELECT * FROM contact_messages ORDER BY created_at DES
                                         data-bs-target="#messageModal<?php echo $message['id']; ?>">
                                         <i class="fas fa-eye"></i> View
                                     </button>
-                                    <a href="messages.php?delete=<?php echo $message['id']; ?>&csrf_token=<?php echo generateCSRFToken(); ?>"
+                                    <a href="messages?delete=<?php echo $message['id']; ?>&csrf_token=<?php echo generateCSRFToken(); ?>"
                                         class="btn btn-sm btn-outline-danger"
                                         onclick="return confirm('Are you sure you want to delete this message?');">
                                         <i class="fas fa-trash"></i>

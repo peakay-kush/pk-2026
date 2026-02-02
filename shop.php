@@ -109,7 +109,7 @@ $categories = $conn->query("SELECT DISTINCT category FROM products ORDER BY cate
                                 <option value="name">Name: A-Z</option>
                             </select>
 
-                            <a href="shop.php" class="btn w-100 fw-bold py-2" 
+                            <a href="shop" class="btn w-100 fw-bold py-2" 
                                style="background-color: #00E676; color: white; border: none; border-radius: 8px;">
                                 Clear Filters
                             </a>
@@ -182,7 +182,7 @@ $categories = $conn->query("SELECT DISTINCT category FROM products ORDER BY cate
                                     </button>
                                     <?php endif; ?>
                                     
-                                    <a href="product.php?slug=<?php echo urlencode($product['slug']); ?>" 
+                                    <a href="product/<?php echo urlencode($product['slug']); ?>" 
                                        class="btn fw-bold d-flex align-items-center justify-content-center"
                                        style="border: 2px solid #00E676; color: #00E676; background: white; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none;">
                                         View
@@ -216,7 +216,7 @@ $categories = $conn->query("SELECT DISTINCT category FROM products ORDER BY cate
     <div class="container text-center">
         <h2>Can't Find What You're Looking For?</h2>
         <p class="lead mb-4">Contact us for custom orders and special requests</p>
-        <a href="contact.php" class="btn btn-lg"><i class="fas fa-envelope"></i> Contact Us</a>
+        <a href="contact" class="btn btn-lg"><i class="fas fa-envelope"></i> Contact Us</a>
     </div>
 </section>
 

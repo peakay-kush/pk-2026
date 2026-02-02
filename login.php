@@ -7,7 +7,7 @@ $page_title = 'Login';
 
 // Redirect if already logged in
 if (isLoggedIn()) {
-    header('Location: index.php');
+    header('Location: index');
     exit;
 }
 
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = loginUser($email, $password);
 
     if ($result['success']) {
-        header('Location: index.php');
+        header('Location: index');
         exit;
     } else {
         $error = $result['message'];
@@ -79,12 +79,12 @@ require_once 'includes/header.php';
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <a href="password_reset_request.php" class="small text-primary">Forgot password?</a>
+                            <a href="password_reset_request" class="small text-primary">Forgot password?</a>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Login</button>
                     </form>
                     <div class="mt-3 text-center">
-                        <a href="register.php">Don't have an account? Register</a>
+                        <a href="register">Don't have an account? Register</a>
                     </div>
                 </div>
             </div>

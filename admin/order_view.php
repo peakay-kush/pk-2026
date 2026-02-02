@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
             $_SESSION['flash_message'] = 'Order status updated successfully and notifications sent!';
             $_SESSION['flash_type'] = 'success';
         }
-        header("Location: order_view.php?id=$order_id");
+        header("Location: order_view?id=$order_id");
         exit;
     }
 }
@@ -86,7 +86,7 @@ $order = $stmt->fetch();
 if (!$order) {
     $_SESSION['flash_message'] = 'Order not found';
     $_SESSION['flash_type'] = 'error';
-    header('Location: orders.php');
+    header('Location: orders');
     exit;
 }
 
@@ -114,7 +114,7 @@ while ($row = $items_stmt->fetch()) {
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="page-title mb-0"><i class="fas fa-receipt"></i> Order #<?php echo $order['id']; ?></h2>
-    <a href="orders.php" class="btn btn-secondary">
+    <a href="orders" class="btn btn-secondary">
         <i class="fas fa-arrow-left"></i> Back to Orders
     </a>
 </div>

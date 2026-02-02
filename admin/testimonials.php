@@ -15,7 +15,7 @@ if (isset($_GET['delete'])) {
     $stmt->execute([$id]);
     $_SESSION['flash_message'] = 'Testimonial deleted successfully!';
     $_SESSION['flash_type'] = 'success';
-    header('Location: testimonials.php');
+    header('Location: testimonials');
     exit;
 }
 
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['flash_type'] = 'success';
     }
 
-    header('Location: testimonials.php');
+    header('Location: testimonials');
     exit;
 }
 
@@ -54,7 +54,7 @@ $testimonials = $conn->query("SELECT id, name, role as position, message as cont
 
 <div class="row mb-4">
     <div class="col-md-12">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
             <h2 class="page-title mb-0"><i class="fas fa-comments"></i> Testimonials Management</h2>
             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#testimonialModal">
                 <i class="fas fa-plus"></i> Add New Testimonial

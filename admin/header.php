@@ -444,12 +444,18 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
         }
 
         /* Responsive */
+        /* Responsive */
         @media (max-width: 991.98px) {
             .admin-sidebar {
                 transform: translateX(-100%);
-                width: 100%;
-                height: auto;
-                position: relative;
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 280px;
+                z-index: 1050;
+                transition: transform 0.3s ease-in-out;
+                box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
             }
 
             .admin-sidebar.show {
@@ -459,6 +465,54 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
             .admin-content {
                 margin-left: 0;
                 padding: 1.5rem;
+                padding-top: 80px;
+                /* Space for mobile header */
+                width: 100%;
+            }
+
+            /* Mobile Header */
+            .mobile-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 1rem 1.5rem;
+                background: white;
+                border-bottom: 1px solid var(--border-color);
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1040;
+                box-shadow: var(--shadow-sm);
+            }
+
+            /* Overlay */
+            .sidebar-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 1045;
+                display: none;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .sidebar-overlay.show {
+                display: block;
+                opacity: 1;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .mobile-header {
+                display: none;
+            }
+
+            .sidebar-overlay {
+                display: none;
             }
         }
 
@@ -546,11 +600,55 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
             cursor: pointer;
             z-index: 10;
         }
+
+        /* Mobile Optimizations */
+        @media (max-width: 991.98px) {
+            .page-title {
+                flex-direction: column;
+                align-items: flex-start !important;
+                gap: 1rem;
+            }
+
+            .page-title .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* Fix chaotic buttons in tables/lists */
+            .btn-group-mobile {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .btn-group-mobile .btn {
+                flex: 1;
+                white-space: nowrap;
+            }
+
+            /* Ensure tables scroll horizontally */
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
     </style>
 
 </head>
 
 <body>
+    <!-- Mobile Header -->
+    <div class="mobile-header d-lg-none">
+        <h5 class="m-0 fw-bold" style="color: var(--primary-600);"><i class="fas fa-shield-halved me-2"></i> Admin Panel
+        </h5>
+        <button class="btn btn-light bg-white border" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <!-- Layout Wrapper -->
     <div class="d-flex w-100">
         <!-- Sidebar -->
@@ -561,51 +659,48 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                     <?php echo $_SESSION['user_name']; ?></small>
             </div>
             <nav class="mt-3">
-                <a href="index.php" class="nav-link <?php echo $current_page == 'index' ? 'active' : ''; ?>">
+                <a href="index" class="nav-link <?php echo $current_page == 'index' ? 'active' : ''; ?>">
                     <i class="fas fa-home"></i> Dashboard
                 </a>
-                <a href="products.php" class="nav-link <?php echo $current_page == 'products' ? 'active' : ''; ?>">
+                <a href="products" class="nav-link <?php echo $current_page == 'products' ? 'active' : ''; ?>">
                     <i class="fas fa-box"></i> Products
                 </a>
-                <a href="orders.php" class="nav-link <?php echo $current_page == 'orders' ? 'active' : ''; ?>">
+                <a href="orders" class="nav-link <?php echo $current_page == 'orders' ? 'active' : ''; ?>">
                     <i class="fas fa-shopping-cart"></i> Orders
                 </a>
-                <a href="users.php" class="nav-link <?php echo $current_page == 'users' ? 'active' : ''; ?>">
+                <a href="users" class="nav-link <?php echo $current_page == 'users' ? 'active' : ''; ?>">
                     <i class="fas fa-users"></i> Users
                 </a>
-                <a href="services.php" class="nav-link <?php echo $current_page == 'services' ? 'active' : ''; ?>">
+                <a href="services" class="nav-link <?php echo $current_page == 'services' ? 'active' : ''; ?>">
                     <i class="fas fa-wrench"></i> Services
                 </a>
-                <a href="tutorials.php" class="nav-link <?php echo $current_page == 'tutorials' ? 'active' : ''; ?>">
+                <a href="tutorials" class="nav-link <?php echo $current_page == 'tutorials' ? 'active' : ''; ?>">
                     <i class="fas fa-graduation-cap"></i> Tutorials
                 </a>
-                <a href="payments.php" class="nav-link <?php echo $current_page == 'payments' ? 'active' : ''; ?>">
+                <a href="payments" class="nav-link <?php echo $current_page == 'payments' ? 'active' : ''; ?>">
                     <i class="fas fa-money-bill-wave"></i> Payments
                 </a>
-                <a href="testimonials.php"
-                    class="nav-link <?php echo $current_page == 'testimonials' ? 'active' : ''; ?>">
+                <a href="testimonials" class="nav-link <?php echo $current_page == 'testimonials' ? 'active' : ''; ?>">
                     <i class="fas fa-comments"></i> Testimonials
                 </a>
-                <a href="hero_images.php"
-                    class="nav-link <?php echo $current_page == 'hero_images' ? 'active' : ''; ?>">
+                <a href="hero_images" class="nav-link <?php echo $current_page == 'hero_images' ? 'active' : ''; ?>">
                     <i class="fas fa-images"></i> Hero Images
                 </a>
-                <a href="team_members.php"
-                    class="nav-link <?php echo $current_page == 'team_members' ? 'active' : ''; ?>">
+                <a href="team_members" class="nav-link <?php echo $current_page == 'team_members' ? 'active' : ''; ?>">
                     <i class="fas fa-user-friends"></i> Team Members
                 </a>
-                <a href="messages.php" class="nav-link <?php echo $current_page == 'messages' ? 'active' : ''; ?>">
+                <a href="messages" class="nav-link <?php echo $current_page == 'messages' ? 'active' : ''; ?>">
                     <i class="fas fa-envelope"></i> Messages
                 </a>
-                <a href="shipping_locations.php"
+                <a href="shipping_locations"
                     class="nav-link <?php echo $current_page == 'shipping_locations' ? 'active' : ''; ?>">
                     <i class="fas fa-map-marker-alt"></i> Shipping Locations
                 </a>
                 <hr class="border-light">
-                <a href="<?php echo SITE_URL; ?>/index.php" class="nav-link">
+                <a href="<?php echo SITE_URL; ?>/index" class="nav-link">
                     <i class="fas fa-globe"></i> View Website
                 </a>
-                <a href="<?php echo SITE_URL; ?>/logout.php" class="nav-link">
+                <a href="<?php echo SITE_URL; ?>/logout" class="nav-link">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </nav>
@@ -624,3 +719,36 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             <?php endif; ?>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const toggleBtn = document.getElementById('sidebarToggle');
+                    const sidebar = document.querySelector('.admin-sidebar');
+                    const overlay = document.getElementById('sidebarOverlay');
+
+                    if (toggleBtn && sidebar && overlay) {
+                        function toggleSidebar() {
+                            sidebar.classList.toggle('show');
+                            overlay.classList.toggle('show');
+                            document.body.style.overflow = sidebar.classList.contains('show') ? 'hidden' : '';
+                        }
+
+                        toggleBtn.addEventListener('click', function (e) {
+                            e.stopPropagation();
+                            toggleSidebar();
+                        });
+
+                        overlay.addEventListener('click', toggleSidebar);
+
+                        // Close sidebar on route change (link click) if mobile
+                        const navLinks = sidebar.querySelectorAll('.nav-link');
+                        navLinks.forEach(link => {
+                            link.addEventListener('click', () => {
+                                if (window.innerWidth < 992) {
+                                    toggleSidebar();
+                                }
+                            });
+                        });
+                    }
+                });
+            </script>

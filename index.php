@@ -33,9 +33,9 @@ $students_hero = $stmt->fetch();
         <p class="lead">Your trusted partner in electronics, automation, and innovation. Quality products and
             expert services.</p>
         <div class="d-flex flex-wrap justify-content-center gap-3 mt-5">
-            <a href="shop.php" class="btn btn-accent btn-lg"><i class="fas fa-shopping-bag"></i> Shop
+            <a href="shop" class="btn btn-accent btn-lg"><i class="fas fa-shopping-bag"></i> Shop
                 Components</a>
-            <a href="services.php" class="btn btn-outline-light btn-lg"><i class="fas fa-arrow-right"></i> Explore
+            <a href="services" class="btn btn-outline-light btn-lg"><i class="fas fa-arrow-right"></i> Explore
                 Services</a>
         </div>
     </div>
@@ -81,7 +81,7 @@ $students_hero = $stmt->fetch();
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-5">
             <h2 class="mb-0">Featured <span class="text-gradient">Products</span></h2>
-            <a href="shop.php" class="text-decoration-none" style="color: var(--accent-color); font-weight: 600;">View
+            <a href="shop" class="text-decoration-none" style="color: var(--accent-color); font-weight: 600;">View
                 All <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="row g-4">
@@ -157,7 +157,7 @@ $students_hero = $stmt->fetch();
                         </li>
                     </ul>
                     <div>
-                        <a href="student_hub.php" class="btn btn-lg fw-bold shadow-sm"
+                        <a href="student_hub" class="btn btn-lg fw-bold shadow-sm"
                             style="background-color: #00E676; color: white; border-radius: 8px; padding: 0.8rem 2rem; border: none;">
                             <i class="fas fa-graduation-cap me-2"></i> Explore Student Hub
                         </a>
@@ -201,7 +201,7 @@ $students_hero = $stmt->fetch();
                                 <?php echo htmlspecialchars($tutorial['title']); ?>
                             </h5>
                             <p class="card-text"><?php echo htmlspecialchars($tutorial['excerpt']); ?></p>
-                            <a href="tutorial.php?slug=<?php echo urlencode($tutorial['slug']); ?>"
+                            <a href="tutorial/<?php echo urlencode($tutorial['slug']); ?>"
                                 class="btn btn-accent">Read More</a>
                         </div>
                     </div>
@@ -209,7 +209,7 @@ $students_hero = $stmt->fetch();
             <?php endwhile; ?>
         </div>
         <div class="text-center mt-4">
-            <a href="tutorials.php" class="btn btn-primary btn-lg">View All Tutorials</a>
+            <a href="tutorials" class="btn btn-primary btn-lg">View All Tutorials</a>
         </div>
     </div>
 </section>
@@ -280,8 +280,8 @@ $students_hero = $stmt->fetch();
         <h2>Ready to Get Started?</h2>
         <p class="lead mb-4">Join thousands of satisfied customers and students who trust us for their tech needs</p>
         <div class="d-flex flex-wrap justify-content-center gap-3">
-            <a href="shop.php" class="btn btn-light btn-lg"><i class="fas fa-shopping-bag"></i> Shop Now</a>
-            <a href="contact.php" class="btn btn-outline-light btn-lg"><i class="fas fa-envelope"></i> Contact Us</a>
+            <a href="shop" class="btn btn-light btn-lg"><i class="fas fa-shopping-bag"></i> Shop Now</a>
+            <a href="contact" class="btn btn-outline-light btn-lg"><i class="fas fa-envelope"></i> Contact Us</a>
         </div>
     </div>
 </section>

@@ -53,7 +53,7 @@ $cart_count = getCartItemCount();
                                                     class="cart-product-img"
                                                     alt="<?php echo htmlspecialchars($product['name']); ?>">
                                                 <div class="cart-product-info">
-                                                    <a href="product.php?slug=<?php echo $product['slug']; ?>"
+                                                    <a href="product/<?php echo $product['slug']; ?>"
                                                         class="text-decoration-none">
                                                         <h5><?php echo htmlspecialchars($product['name']); ?></h5>
                                                     </a>
@@ -98,7 +98,7 @@ $cart_count = getCartItemCount();
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mt-4 mb-5 cart-action-buttons">
-                        <a href="shop.php" class="btn btn-outline-primary">
+                        <a href="shop" class="btn btn-outline-primary">
                             <i class="fas fa-arrow-left me-2"></i> Continue Shopping
                         </a>
                         <button class="btn btn-outline-danger" id="clear-cart-btn">
@@ -151,12 +151,12 @@ $cart_count = getCartItemCount();
                                     Proceed to Checkout
                                 </button>
                             <?php else: ?>
-                                <a href="login.php" class="btn btn-lg w-100 mb-3"
+                                <a href="login" class="btn btn-lg w-100 mb-3"
                                     style="background-color: var(--accent-color); color: white; border: none; padding: 0.75rem; font-weight: 600; border-radius: 6px;">
                                     <i class="fas fa-sign-in-alt"></i> Login to Checkout
                                 </a>
                                 <p class="text-center mt-2 mb-0">
-                                    <small>or <a href="register.php" style="color: #0B63CE;">create an account</a></small>
+                                    <small>or <a href="register" style="color: #0B63CE;">create an account</a></small>
                                 </p>
                             <?php endif; ?>
                         </div>
@@ -168,7 +168,7 @@ $cart_count = getCartItemCount();
             <div class="text-center py-5 empty-cart-state" style="border-radius: 12px; padding: 4rem 2rem !important;">
                 <h2 style="color: #0B63CE; font-weight: 700; margin-bottom: 1rem;">Your cart is empty</h2>
                 <p class="text-muted mb-4">Start shopping to add items to your cart</p>
-                <a href="shop.php" class="btn btn-lg"
+                <a href="shop" class="btn btn-lg"
                     style="background-color: var(--accent-color); color: white; border: none; padding: 0.8rem 2rem; font-weight: 600; border-radius: 8px;">
                     <i class="fas fa-arrow-left"></i> Continue Shopping
                 </a>

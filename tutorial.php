@@ -1,7 +1,7 @@
 <?php
-$page_title = 'Tutorial';
-require_once 'includes/header.php';
+require_once 'includes/config.php';
 require_once 'includes/db.php';
+require_once 'includes/functions.php';
 
 // Get tutorial by slug
 $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
@@ -21,6 +21,36 @@ if ($stmt->rowCount() === 0) {
 
 $tutorial = $stmt->fetch();
 $page_title = $tutorial['title'];
+$page_description = isset($tutorial['excerpt']) ? $tutorial['excerpt'] : substr(strip_tags($tutorial['content']), 0, 160);
+$page_image = $tutorial['image'] ?? 'assets/images/logo 2.png';
+$og_type = 'article';
+
+// Structured Data for Tutorial (Article)
+$extra_head = '
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "' . htmlspecialchars($tutorial['title']) . '",
+  "image": "' . SITE_URL . '/' . htmlspecialchars($tutorial['image'] ?? 'assets/images/logo 2.png') . '",
+  "author": {
+    "@type": "Organization",
+    "name": "' . SITE_NAME . '"
+  },  
+  "publisher": {
+    "@type": "Organization",
+    "name": "' . SITE_NAME . '",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "' . SITE_URL . '/assets/images/logo 2.png"
+    }
+  },
+  "datePublished": "' . date('c', strtotime($tutorial['created_at'])) . '",
+  "description": "' . htmlspecialchars($page_description) . '"
+}
+</script>';
+
+require_once 'includes/header.php';
 
 // Fetch related tutorials
 $related_stmt = $conn->prepare("SELECT * FROM tutorials WHERE category = ? AND slug != ? LIMIT 3");
@@ -34,15 +64,16 @@ $related_tutorials = $related_stmt;
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
     <div class="container">
         <div class="mb-4">
-            <a href="tutorials.php" class="btn btn-outline-primary shadow-sm" style="border-radius: 20px;">
+            <a href="<?php echo SITE_URL; ?>/tutorials" class="btn btn-outline-primary shadow-sm"
+                style="border-radius: 20px;">
                 <i class="fas fa-arrow-left me-2"></i> Back to Tutorials
             </a>
         </div>
         <div class="row">
             <div class="col-md-8 mx-auto">
                 <?php if ($tutorial['image']): ?>
-                    <img src="<?php echo htmlspecialchars($tutorial['image']); ?>" class="img-fluid rounded mb-4"
-                        alt="<?php echo htmlspecialchars($tutorial['title']); ?>"
+                    <img src="<?php echo SITE_URL; ?>/<?php echo htmlspecialchars($tutorial['image']); ?>"
+                        class="img-fluid rounded mb-4" alt="<?php echo htmlspecialchars($tutorial['title']); ?>"
                         style="max-height: 400px; width: 100%; object-fit: cover;">
                 <?php endif; ?>
                 <span class="badge mb-3"
@@ -71,6 +102,10 @@ $related_tutorials = $related_stmt;
                     <?php
                     // Replace literal \n with actual newlines (for sample data)
                     $content = str_replace('\n', "\n", $tutorial['content']);
+
+                    // Fix relative image paths for proper display
+                    $content = str_replace('src="../assets/', 'src="' . SITE_URL . '/assets/', $content);
+                    $content = str_replace('src="assets/', 'src="' . SITE_URL . '/assets/', $content);
 
                     // Add copy button to code blocks
                     $content = preg_replace(
@@ -199,11 +234,11 @@ $related_tutorials = $related_stmt;
                     <h5>Found this tutorial helpful?</h5>
                     <p>Share it with your classmates and friends!</p>
                     <div class="d-flex flex-wrap gap-2">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(SITE_URL . '/tutorial.php?slug=' . $tutorial['slug']); ?>"
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(SITE_URL . '/tutorial/' . $tutorial['slug']); ?>"
                             class="btn btn-primary" target="_blank"><i class="fab fa-facebook"></i> Share</a>
-                        <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(SITE_URL . '/tutorial.php?slug=' . $tutorial['slug']); ?>&text=<?php echo urlencode($tutorial['title']); ?>"
+                        <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(SITE_URL . '/tutorial/' . $tutorial['slug']); ?>&text=<?php echo urlencode($tutorial['title']); ?>"
                             class="btn btn-info text-white" target="_blank"><i class="fab fa-twitter"></i> Tweet</a>
-                        <a href="https://wa.me/?text=<?php echo urlencode($tutorial['title'] . ' - ' . SITE_URL . '/tutorial.php?slug=' . $tutorial['slug']); ?>"
+                        <a href="https://wa.me/?text=<?php echo urlencode($tutorial['title'] . ' - ' . SITE_URL . '/tutorial/' . $tutorial['slug']); ?>"
                             class="btn btn-success" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                     </div>
                 </div>
@@ -228,7 +263,8 @@ $related_tutorials = $related_stmt;
                                     <?php echo htmlspecialchars($related['title']); ?>
                                 </h5>
                                 <p class="card-text"><?php echo htmlspecialchars($related['excerpt']); ?></p>
-                                <a href="tutorial.php?slug=<?php echo urlencode($related['slug']); ?>" class="btn btn-accent">
+                                <a href="<?php echo SITE_URL; ?>/tutorial/<?php echo urlencode($related['slug']); ?>"
+                                    class="btn btn-accent">
                                     Read Tutorial
                                 </a>
                             </div>
@@ -245,7 +281,7 @@ $related_tutorials = $related_stmt;
     <div class="container text-center">
         <h2>Need Components for This Project?</h2>
         <p class="lead mb-4">Browse our shop for all the parts you need</p>
-        <a href="shop.php" class="btn btn-lg"><i class="fas fa-shopping-bag"></i> Visit Shop</a>
+        <a href="shop" class="btn btn-lg"><i class="fas fa-shopping-bag"></i> Visit Shop</a>
     </div>
 </section>
 

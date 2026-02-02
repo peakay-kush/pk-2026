@@ -18,7 +18,7 @@ if (isset($_GET['delete'])) {
 
     $_SESSION['flash_message'] = 'Product deleted successfully';
     $_SESSION['flash_type'] = 'success';
-    header('Location: products.php');
+    header('Location: products');
     exit;
 }
 
@@ -29,9 +29,9 @@ require_once 'header.php';
 $products = $conn->query("SELECT * FROM products ORDER BY name");
 ?>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
     <h2 class="page-title mb-0"><i class="fas fa-box"></i> Manage Products</h2>
-    <a href="product_add.php" class="btn btn-success">
+    <a href="product_add" class="btn btn-success">
         <i class="fas fa-plus"></i> Add New Product
     </a>
 </div>
@@ -78,11 +78,10 @@ $products = $conn->query("SELECT * FROM products ORDER BY name");
                                 <?php endif; ?>
                             </td>
                             <td class="text-nowrap">
-                                <a href="product_edit.php?id=<?php echo $product['id']; ?>"
-                                    class="btn btn-sm btn-primary me-2">
+                                <a href="product_edit?id=<?php echo $product['id']; ?>" class="btn btn-sm btn-primary me-2">
                                     <i class="fas fa-edit"></i> Edit
                                 </a>
-                                <a href="products.php?delete=<?php echo $product['id']; ?>&csrf_token=<?php echo generateCSRFToken(); ?>"
+                                <a href="products?delete=<?php echo $product['id']; ?>&csrf_token=<?php echo generateCSRFToken(); ?>"
                                     class="btn btn-sm btn-danger btn-delete"
                                     onclick="return confirm('Are you sure you want to delete this product?');">
                                     <i class="fas fa-trash"></i> Delete

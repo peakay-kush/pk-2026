@@ -63,7 +63,7 @@ $recent_messages = $conn->query("SELECT * FROM contact_messages ORDER BY created
     <div class="alert alert-warning">
         <i class="fas fa-exclamation-triangle"></i> You have <strong><?php echo $pending_orders; ?></strong> pending
         order(s) to process.
-        <a href="orders.php?status=pending" class="alert-link">View pending orders</a>
+        <a href="orders?status=pending" class="alert-link">View pending orders</a>
     </div>
 <?php endif; ?>
 
@@ -73,7 +73,7 @@ $recent_messages = $conn->query("SELECT * FROM contact_messages ORDER BY created
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0"><i class="fas fa-shopping-cart me-2"></i>Recent Orders</h5>
-                <a href="orders.php" class="btn btn-sm btn-primary">View All</a>
+                <a href="orders" class="btn btn-sm btn-primary">View All</a>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -104,8 +104,7 @@ $recent_messages = $conn->query("SELECT * FROM contact_messages ORDER BY created
                                     </td>
                                     <td><?php echo formatDate($order['created_at']); ?></td>
                                     <td>
-                                        <a href="order_view.php?id=<?php echo $order['id']; ?>"
-                                            class="btn btn-sm btn-primary">
+                                        <a href="order_view?id=<?php echo $order['id']; ?>" class="btn btn-sm btn-primary">
                                             <i class="fas fa-eye"></i> View
                                         </a>
                                     </td>
@@ -123,7 +122,7 @@ $recent_messages = $conn->query("SELECT * FROM contact_messages ORDER BY created
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0"><i class="fas fa-envelope me-2"></i>Recent Messages</h5>
-                <a href="messages.php" class="btn btn-sm btn-primary">View All</a>
+                <a href="messages" class="btn btn-sm btn-primary">View All</a>
             </div>
             <div class="card-body">
                 <?php if ($recent_messages->rowCount() > 0): ?>

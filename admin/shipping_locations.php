@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare("INSERT INTO shipping_locations (name, fee) VALUES (?, ?)");
             $stmt->execute([$name, $fee]);
             setFlashMessage('Shipping location added successfully!', 'success');
-            header('Location: shipping_locations.php');
+            header('Location: shipping_locations');
             exit;
         } else {
             setFlashMessage('Please enter a valid name and fee.', 'error');
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare("UPDATE shipping_locations SET name = ?, fee = ? WHERE id = ?");
             $stmt->execute([$name, $fee, $id]);
             setFlashMessage('Shipping location updated!', 'success');
-            header('Location: shipping_locations.php');
+            header('Location: shipping_locations');
             exit;
         } else {
             setFlashMessage('Invalid update data.', 'error');
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare("DELETE FROM shipping_locations WHERE id = ?");
             $stmt->execute([$id]);
             setFlashMessage('Shipping location deleted.', 'success');
-            header('Location: shipping_locations.php');
+            header('Location: shipping_locations');
             exit;
         } else {
             setFlashMessage('Invalid location ID.', 'error');

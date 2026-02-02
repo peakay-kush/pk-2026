@@ -14,13 +14,13 @@ $order_id = $_GET['id'] ?? null;
 
 if (!verifyCSRFToken($_GET['csrf_token'] ?? '')) {
     setFlashMessage('Invalid security token. Please try again.', 'error');
-    header('Location: dashboard.php?section=orders');
+    header('Location: dashboard?section=orders');
     exit;
 }
 
 if (!$order_id) {
     setFlashMessage('Invalid order ID', 'error');
-    header('Location: dashboard.php?section=orders');
+    header('Location: dashboard?section=orders');
     exit;
 }
 
@@ -31,7 +31,7 @@ $order = $verify_query->fetch();
 
 if (!$order) {
     setFlashMessage('Order not found or you do not have permission to delete it', 'error');
-    header('Location: dashboard.php?section=orders');
+    header('Location: dashboard?section=orders');
     exit;
 }
 
@@ -46,5 +46,5 @@ try {
 }
 
 // Redirect back to orders page
-header('Location: dashboard.php?section=orders');
+header('Location: dashboard?section=orders');
 exit;

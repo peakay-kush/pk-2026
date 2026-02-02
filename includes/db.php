@@ -32,7 +32,20 @@ try {
         $conn->exec('PRAGMA foreign_keys = ON');
     }
 } catch (PDOException $e) {
-    // If MySQL connection fails, help valid configuration
+    // Log the actual error
+    error_log("Database Connection Error: " . $e->getMessage());
+
+    // Show friendly error in production
+    if (defined('PRODUCTION') && PRODUCTION) {
+        if (file_exists(__DIR__ . '/../error.php')) {
+            include __DIR__ . '/../error.php';
+        } else {
+            die("<h1>Service Unavailable</h1><p>We are currently experiencing technical difficulties. Please try again later.</p>");
+        }
+        exit;
+    }
+
+    // If MySQL connection fails, help valid configuration (Dev mode only)
     if (defined('DB_DRIVER') && DB_DRIVER === 'mysql') {
         die("MySQL Connection failed: " . $e->getMessage() . "<br>Please check your config.php settings and ensure the database '" . DB_NAME . "' exists.");
     }

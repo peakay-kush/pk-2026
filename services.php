@@ -63,8 +63,7 @@ $services = $conn->query("SELECT * FROM services");
                                 </div>
                             </div>
 
-                            <a href="contact.php?service=<?php echo urlencode($service['title']); ?>"
-                                class="btn fw-bold shadow-sm"
+                            <a href="contact?service=<?php echo urlencode($service['title']); ?>" class="btn fw-bold shadow-sm"
                                 style="background-color: <?php echo $index % 2 == 0 ? '#0B63CE' : '#00E676'; ?>; color: white; border-radius: 6px; padding: 0.6rem 1.5rem; border: none;">
                                 <i class="fas fa-paper-plane me-2"></i> Request This Service
                             </a>
@@ -128,8 +127,7 @@ $services = $conn->query("SELECT * FROM services");
                                 </div>
                             </div>
 
-                            <a href="contact.php?service=<?php echo urlencode($service['title']); ?>"
-                                class="btn fw-bold shadow-sm"
+                            <a href="contact?service=<?php echo urlencode($service['title']); ?>" class="btn fw-bold shadow-sm"
                                 style="background-color: #00E676; color: white; border-radius: 6px; padding: 0.6rem 1.5rem; border: none;">
                                 <i class="fas fa-paper-plane me-2"></i> Request This Service
                             </a>
@@ -197,7 +195,7 @@ $services = $conn->query("SELECT * FROM services");
     <div class="container text-center">
         <h2>Need a Custom Solution?</h2>
         <p class="lead mb-4">Contact us to discuss your specific requirements</p>
-        <a href="contact.php" class="btn btn-lg"><i class="fas fa-envelope"></i> Get in Touch</a>
+        <a href="contact" class="btn btn-lg"><i class="fas fa-envelope"></i> Get in Touch</a>
     </div>
 </section>
 

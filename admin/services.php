@@ -16,7 +16,7 @@ if (isset($_GET['delete'])) {
     $stmt->execute([$id]);
     $_SESSION['flash_message'] = 'Service deleted successfully!';
     $_SESSION['flash_type'] = 'success';
-    header('Location: services.php');
+    header('Location: services');
     exit;
 }
 
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['flash_type'] = 'success';
     }
 
-    header('Location: services.php');
+    header('Location: services');
     exit;
 }
 
@@ -109,7 +109,7 @@ $services = $conn->query("SELECT * FROM services ORDER BY id DESC")->fetchAll();
 
 <div class="row mb-4">
     <div class="col-md-12">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
             <h2 class="page-title mb-0"><i class="fas fa-wrench"></i> Services Management</h2>
             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#serviceModal">
                 <i class="fas fa-plus"></i> Add New Service

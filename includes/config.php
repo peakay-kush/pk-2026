@@ -14,7 +14,11 @@ define('DB_DRIVER', 'mysql'); // Options: 'sqlite', 'mysql'. Set to 'mysql' for 
 define('DB_PATH', __DIR__ . '/../database/tech_electronics.db');
 
 // MySQL Configuration
-define('DB_HOST', $_ENV['DB_HOST'] ?? '127.0.0.1');
+$db_host = $_ENV['DB_HOST'] ?? '127.0.0.1';
+if ($db_host === 'localhost') {
+    $db_host = '127.0.0.1'; // Force TCP/IP to avoid socket errors
+}
+define('DB_HOST', $db_host);
 define('DB_NAME', $_ENV['DB_NAME'] ?? 'pk_automations');
 define('DB_USER', $_ENV['DB_USER'] ?? 'root');
 define('DB_PASS', $_ENV['DB_PASSWORD'] ?? '');
@@ -58,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['skip_csrf'])) {
 }
 
 // Error Handling
-define('PRODUCTION', ($_ENV['APP_ENV'] ?? 'local') === 'production');
+define('PRODUCTION', ($_ENV['APP_ENV'] ?? 'production') === 'production');
 
 // Common Logging Setup
 ini_set('log_errors', 1);

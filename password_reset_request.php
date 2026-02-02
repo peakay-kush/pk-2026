@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Store token
             $conn->prepare('INSERT INTO password_resets (user_id, token, expires_at) VALUES (?, ?, ?)')->execute([$user['id'], $token, $expires]);
             // Send email
-            $reset_link = SITE_URL . '/password_reset.php?token=' . $token;
+            $reset_link = SITE_URL . '/password_reset?token=' . $token;
             $subject = 'Password Reset Request';
             $message = 'Click the link below to reset your password:<br><a href="' . $reset_link . '">' . $reset_link . '</a><br>This link will expire in 1 hour.';
             sendEmail($email, $subject, $message);
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Send Reset Link</button>
                         </form>
-                        <a href="login.php" class="d-block mt-3">Back to Login</a>
+                        <a href="login" class="d-block mt-3">Back to Login</a>
                     </div>
                 </div>
             </div>

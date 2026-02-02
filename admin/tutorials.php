@@ -15,7 +15,7 @@ if (isset($_GET['delete'])) {
     $stmt->execute([$id]);
     $_SESSION['flash_message'] = 'Tutorial deleted successfully!';
     $_SESSION['flash_type'] = 'success';
-    header('Location: tutorials.php');
+    header('Location: tutorials');
     exit;
 }
 
@@ -46,7 +46,7 @@ if (isset($_GET['delete_pdf'])) {
         $_SESSION['flash_type'] = 'success';
     }
 
-    header('Location: tutorials.php');
+    header('Location: tutorials');
     exit;
 }
 
@@ -150,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['flash_type'] = 'success';
     }
 
-    header('Location: tutorials.php');
+    header('Location: tutorials');
     exit;
 }
 
@@ -446,12 +446,11 @@ $tutorials = $conn->query("SELECT * FROM tutorials ORDER BY created_at DESC")->f
     </div>
 </div>
 
-<!-- TinyMCE CDN -->
-<script src="https://cdn.tiny.cloud/1/qtfzaflz9y6nb7hy0dvj1uqw5uwlzk7bp4zm93whxc9nydld/tinymce/6/tinymce.min.js"
-    referrerpolicy="origin"></script>
+<script src="https://cdn.tiny.cloud/1/qtfzaflz9y6nb7hy0dvj1uqw5uwlzk7bp4zm93whxc9nydld/tinymce/8/tinymce.min.js"
+    referrerpolicy="origin" crossorigin="anonymous"></script>
 
 <script>
-    // Global tutorial data for easy access without attribute parsing issues
+    // Global tutorial data
     var allTutorialsData = <?php echo json_encode($tutorials); ?>;
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -459,9 +458,21 @@ $tutorials = $conn->query("SELECT * FROM tutorials ORDER BY created_at DESC")->f
         if (typeof tinymce !== 'undefined') {
             tinymce.init({
                 selector: '#tutorialContent',
-                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat | codesample',
-                height: 400,
+                plugins: [
+                    // Core editing features
+                    'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+                    // Premium features
+                    'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'advtemplate', 'ai', 'uploadcare', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown', 'importword', 'exportword', 'exportpdf'
+                ],
+                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography uploadcare | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | codesample',
+                tinycomments_mode: 'embedded',
+                tinycomments_author: 'Author name',
+                mergetags_list: [
+                    { value: 'First.Name', title: 'First Name' },
+                    { value: 'Email', title: 'Email' },
+                ],
+                ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+                uploadcare_public_key: 'cf36b40869233f98bb88',
                 codesample_languages: [
                     { text: 'HTML/XML', value: 'markup' },
                     { text: 'JavaScript', value: 'javascript' },

@@ -20,5 +20,5 @@ if (isset($_GET['id']) && isset($_GET['toggle'])) {
     $_SESSION['flash_type'] = 'success';
 }
 
-header('Location: products.php');
+header('Location: products');
 exit;

@@ -9,12 +9,12 @@ echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 // Static Pages
 $static_pages = [
     '',
-    '/shop.php',
-    '/services.php',
-    '/tutorials.php',
-    '/about.php',
-    '/contact.php',
-    '/student_hub.php'
+    '/shop',
+    '/services',
+    '/tutorials',
+    '/about',
+    '/contact',
+    '/student_hub'
 ];
 
 foreach ($static_pages as $page) {
@@ -30,7 +30,7 @@ try {
     $stmt = $conn->query("SELECT slug, created_at FROM products");
     while ($row = $stmt->fetch()) {
         echo '<url>';
-        echo '<loc>' . SITE_URL . '/product.php?slug=' . urlencode($row['slug']) . '</loc>';
+        echo '<loc>' . SITE_URL . '/product/' . urlencode($row['slug']) . '</loc>';
         echo '<lastmod>' . date('Y-m-d', strtotime($row['created_at'])) . '</lastmod>';
         echo '<changefreq>monthly</changefreq>';
         echo '<priority>0.7</priority>';
@@ -44,7 +44,7 @@ try {
     $stmt = $conn->query("SELECT slug, created_at FROM tutorials");
     while ($row = $stmt->fetch()) {
         echo '<url>';
-        echo '<loc>' . SITE_URL . '/tutorial_view.php?slug=' . urlencode($row['slug']) . '</loc>';
+        echo '<loc>' . SITE_URL . '/tutorial/' . urlencode($row['slug']) . '</loc>';
         echo '<lastmod>' . date('Y-m-d', strtotime($row['created_at'])) . '</lastmod>';
         echo '<changefreq>monthly</changefreq>';
         echo '<priority>0.6</priority>';

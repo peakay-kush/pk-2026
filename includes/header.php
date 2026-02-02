@@ -45,6 +45,34 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     <meta name="description"
         content="<?php echo isset($page_description) ? htmlspecialchars($page_description) : 'PK Automations - Your trusted partner in electronics, automation, and innovation in Kenya.'; ?>">
 
+    <?php
+    // Construct current URL for canonical and OG tags
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+    $current_url = $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+    // Default Social Media Meta
+    $og_title = isset($page_title) ? $page_title . ' | ' . SITE_NAME : SITE_NAME;
+    $og_desc = isset($page_description) ? $page_description : 'Your trusted partner in electronics, automation, and innovation.';
+    $og_image = isset($page_image) ? SITE_URL . '/' . $page_image : SITE_URL . '/assets/images/logo%202.png';
+    ?>
+
+    <!-- Canonical Link -->
+    <link rel="canonical" href="<?php echo $current_url; ?>">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="<?php echo isset($og_type) ? $og_type : 'website'; ?>">
+    <meta property="og:url" content="<?php echo $current_url; ?>">
+    <meta property="og:title" content="<?php echo htmlspecialchars($og_title); ?>">
+    <meta property="og:description" content="<?php echo htmlspecialchars($og_desc); ?>">
+    <meta property="og:image" content="<?php echo $og_image; ?>">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="<?php echo $current_url; ?>">
+    <meta name="twitter:title" content="<?php echo htmlspecialchars($og_title); ?>">
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($og_desc); ?>">
+    <meta name="twitter:image" content="<?php echo $og_image; ?>">
+
     <!-- Google Fonts - Outfit & Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,6 +96,51 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     <script>
         window.csrfToken = '<?php echo generateCSRFToken(); ?>';
     </script>
+
+    <!-- Global Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "<?php echo SITE_NAME; ?>",
+      "image": "<?php echo SITE_URL; ?>/assets/images/logo%202.png",
+      "@id": "<?php echo SITE_URL; ?>",
+      "url": "<?php echo SITE_URL; ?>",
+      "telephone": "+254712345678",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Limuru Road",
+        "addressLocality": "Limuru",
+        "addressRegion": "Kiambu",
+        "postalCode": "00217",
+        "addressCountry": "KE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -1.107,
+        "longitude": 36.641
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "08:00",
+        "closes": "18:00"
+      },
+      "sameAs": [
+        "https://www.facebook.com/pkautomations",
+        "https://twitter.com/pkautomations",
+        "https://www.instagram.com/pkautomations"
+      ]
+    }
+    </script>
+    <?php echo $extra_head ?? ''; ?>
 </head>
 
 <body>
@@ -75,7 +148,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm py-2">
         <div class="container">
             <!-- Brand Logo -->
-            <a class="navbar-brand me-0" href="<?php echo SITE_URL; ?>/index.php">
+            <a class="navbar-brand me-0" href="<?php echo SITE_URL; ?>/index">
                 <img src="<?php echo SITE_URL; ?>/assets/images/logo 2.png" alt="PK Automations"
                     style="height: 68px; width: auto; max-width: 250px; margin: 0;">
             </a>
@@ -85,7 +158,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                 <button id="darkModeToggleMobile" class="nav-icon-link" style="font-size: 1.2rem; padding: 0.4rem;">
                     <i class="far fa-moon"></i>
                 </button>
-                <a href="<?php echo SITE_URL; ?>/cart.php" class="nav-icon-link nav-cart position-relative"
+                <a href="<?php echo SITE_URL; ?>/cart" class="nav-icon-link nav-cart position-relative"
                     style="font-size: 1.2rem; padding: 0.4rem;">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -100,7 +173,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                         <?php echo $cart_count; ?>
                     </span>
                 </a>
-                <a href="<?php echo SITE_URL; ?>/favorites.php" class="nav-icon-link nav-favorites position-relative"
+                <a href="<?php echo SITE_URL; ?>/favorites" class="nav-icon-link nav-favorites position-relative"
                     style="font-size: 1.2rem; padding: 0.4rem;">
                     <i class="far fa-heart"></i>
                     <?php $fav_count = getFavoritesCount(); ?>
@@ -119,31 +192,52 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
                         <a class="nav-link <?php echo $current_page == 'index' ? 'active' : ''; ?>"
-                            href="<?php echo SITE_URL; ?>/index.php">Home</a>
+                            href="<?php echo SITE_URL; ?>/index">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo $current_page == 'shop' ? 'active' : ''; ?>"
-                            href="<?php echo SITE_URL; ?>/shop.php">Shop</a>
+                            href="<?php echo SITE_URL; ?>/shop">Shop</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo $current_page == 'services' ? 'active' : ''; ?>"
-                            href="<?php echo SITE_URL; ?>/services.php">Services</a>
+                            href="<?php echo SITE_URL; ?>/services">Services</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo $current_page == 'tutorials' ? 'active' : ''; ?>"
-                            href="<?php echo SITE_URL; ?>/tutorials.php">Tutorials</a>
+                            href="<?php echo SITE_URL; ?>/tutorials">Tutorials</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo $current_page == 'student_hub' ? 'active' : ''; ?>"
-                            href="<?php echo SITE_URL; ?>/student_hub.php">Student Hub</a>
+                            href="<?php echo SITE_URL; ?>/student_hub">Student Hub</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo $current_page == 'about' ? 'active' : ''; ?>"
-                            href="<?php echo SITE_URL; ?>/about.php">About</a>
+                            href="<?php echo SITE_URL; ?>/about">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo $current_page == 'contact' ? 'active' : ''; ?>"
-                            href="<?php echo SITE_URL; ?>/contact.php">Contact</a>
+                            href="<?php echo SITE_URL; ?>/contact">Contact</a>
+                    </li>
+
+                    <!-- Mobile-only Account Links -->
+                    <li class="nav-item d-lg-none border-top mt-2 pt-2">
+                        <?php if (isLoggedIn()): ?>
+                            <a class="nav-link" href="<?php echo SITE_URL; ?>/dashboard">
+                                <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                            </a>
+                            <?php if (isAdmin()): ?>
+                                <a class="nav-link text-primary-custom" href="<?php echo SITE_URL; ?>/admin/">
+                                    <i class="fas fa-cog me-2"></i> Admin Panel
+                                </a>
+                            <?php endif; ?>
+                            <a class="nav-link text-danger" href="<?php echo SITE_URL; ?>/logout">
+                                <i class="fas fa-sign-out-alt me-2"></i> Logout
+                            </a>
+                        <?php else: ?>
+                            <a class="nav-link text-primary-custom fw-bold" href="<?php echo SITE_URL; ?>/login">
+                                <i class="fas fa-sign-in-alt me-2"></i> Login / Register
+                            </a>
+                        <?php endif; ?>
                     </li>
                 </ul>
 
@@ -152,7 +246,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                     <button id="darkModeToggle" class="nav-icon-link" title="Toggle Dark Mode">
                         <i class="far fa-moon"></i>
                     </button>
-                    <a href="<?php echo SITE_URL; ?>/cart.php" class="nav-icon-link nav-cart position-relative"
+                    <a href="<?php echo SITE_URL; ?>/cart" class="nav-icon-link nav-cart position-relative"
                         title="Cart">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -167,8 +261,8 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                             <?php echo $cart_count; ?>
                         </span>
                     </a>
-                    <a href="<?php echo SITE_URL; ?>/favorites.php"
-                        class="nav-icon-link nav-favorites position-relative" title="Favorites">
+                    <a href="<?php echo SITE_URL; ?>/favorites" class="nav-icon-link nav-favorites position-relative"
+                        title="Favorites">
                         <i class="far fa-heart"></i>
                         <?php $fav_count = getFavoritesCount(); ?>
                         <span class="nav-badge"
@@ -201,7 +295,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                                 </div>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/dashboard.php"><i
+                                <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/dashboard"><i
                                             class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                                 <?php if (isAdmin()): ?>
                                     <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/admin/"><i
@@ -210,12 +304,12 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/logout.php"><i
+                                <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/logout"><i
                                             class="fas fa-sign-out-alt"></i> Logout</a></li>
                             </ul>
                         </div>
                     <?php else: ?>
-                        <a href="<?php echo SITE_URL; ?>/login.php" class="btn btn-outline-primary shadow-sm"
+                        <a href="<?php echo SITE_URL; ?>/login" class="btn btn-outline-primary shadow-sm"
                             style="border-radius: 20px; padding: 0.4rem 1.5rem; font-weight: 500;">Login</a>
                     <?php endif; ?>
                 </div>

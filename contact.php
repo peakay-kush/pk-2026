@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email_message .= "<p><strong>Message:</strong><br>$message</p>";
             sendEmail(ADMIN_EMAIL, $email_subject, $email_message);
             // Redirect before any output
-            header('Location: contact.php?sent=1');
+            header('Location: contact?sent=1');
             exit;
         } else {
             $_SESSION['error'] = 'Failed to send message. Please try again.';

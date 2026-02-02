@@ -25,27 +25,27 @@
                 <h6 class="fw-bold text-uppercase mb-4" style="font-family: 'Outfit', sans-serif; letter-spacing: 1px;">
                     Quick Links</h6>
                 <ul class="list-unstyled">
-                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/index.php" class="footer-link">Home</a></li>
-                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/shop.php" class="footer-link">Shop</a></li>
-                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/services.php" class="footer-link">Services</a>
+                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/index" class="footer-link">Home</a></li>
+                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/shop" class="footer-link">Shop</a></li>
+                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/services" class="footer-link">Services</a>
                     </li>
-                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/about.php" class="footer-link">About Us</a></li>
-                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/contact.php" class="footer-link">Contact</a></li>
+                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/about" class="footer-link">About Us</a></li>
+                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/contact" class="footer-link">Contact</a></li>
                 </ul>
             </div>
             <div class="col-lg-3 col-md-6 mb-4">
                 <h6 class="fw-bold text-uppercase mb-4" style="font-family: 'Outfit', sans-serif; letter-spacing: 1px;">
                     Our Services</h6>
                 <ul class="list-unstyled">
-                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/services.php" class="footer-link">Electrical
+                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/services" class="footer-link">Electrical
                             Installation</a></li>
-                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/services.php" class="footer-link">IoT
+                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/services" class="footer-link">IoT
                             Solutions</a></li>
-                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/services.php" class="footer-link">Web
+                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/services" class="footer-link">Web
                             Development</a></li>
-                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/student_hub.php" class="footer-link">Student
+                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/student_hub" class="footer-link">Student
                             Support</a></li>
-                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/tutorials.php" class="footer-link">Tutorials</a>
+                    <li class="mb-3"><a href="<?php echo SITE_URL; ?>/tutorials" class="footer-link">Tutorials</a>
                     </li>
                 </ul>
             </div>
@@ -107,7 +107,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Custom JS -->
-<script src="<?php echo SITE_URL; ?>/assets/js/script.js"></script>
+<script src="<?php echo SITE_URL; ?>/assets/js/script.js?v=<?php echo time(); ?>"></script>
 </body>
 
 </html>

@@ -79,6 +79,6 @@ if ($action === 'clear') {
     exit;
 }
 
-header('Location: shop.php');
+header('Location: shop');
 exit;
 ?>

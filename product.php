@@ -1,14 +1,12 @@
 <?php
-$page_title = 'Product Details';
-$page_title = 'Product Details';
 require_once 'includes/db.php';
-require_once 'includes/header.php';
+require_once 'includes/functions.php';
 
 // Get product by slug
 $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
 
 if (empty($slug)) {
-    header('Location: shop.php');
+    header('Location: shop');
     exit;
 }
 
@@ -17,13 +15,49 @@ $stmt->execute([$slug]);
 $product = $stmt->fetch();
 
 if (!$product) {
-    header('Location: shop.php');
+    header('Location: shop');
     exit;
 }
+
 $page_title = $product['name'];
+$page_description = substr(strip_tags($product['description']), 0, 160);
+$page_image = 'assets/images/products/' . ($product['image'] ?? 'placeholder.jpg');
+$og_type = 'product';
+
+// Structured Data for Product
+$extra_head = '
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "' . htmlspecialchars($product['name']) . '",
+  "image": "' . SITE_URL . '/assets/images/products/' . htmlspecialchars($product['image'] ?? 'placeholder.jpg') . '",
+  "description": "' . htmlspecialchars($page_description) . '",
+  "brand": {
+    "@type": "Brand",
+    "name": "' . SITE_NAME . '"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "' . SITE_URL . '/product/' . $product['slug'] . '",
+    "priceCurrency": "KES",
+    "price": "' . $product['price'] . '",
+    "availability": "https://schema.org/' . ($product['stock'] > 0 ? 'InStock' : 'OutOfStock') . '",
+    "itemCondition": "https://schema.org/NewCondition"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "' . ($product['rating'] ?? '5') . '",
+    "reviewCount": "10"
+  }
+}
+</script>';
+
+require_once 'includes/header.php';
 
 // Fetch all product images
-$img_stmt = $conn->prepare("SELECT * FROM product_images WHERE product_id = ? ORDER BY is_primary DESC, sort_order ASC");
+$img_stmt = $conn->prepare("SELECT * FROM product_images WHERE product_id = ? ORDER BY is_primary DESC, sort_order
+ASC");
 $img_stmt->execute([$product['id']]);
 $product_images = $img_stmt->fetchAll();
 
@@ -43,7 +77,7 @@ $related_products = $related_stmt->fetchAll();
                     <!-- Main Image -->
                     <div class="mb-3 position-relative">
                         <div class="product-card-img-container" style="height: 400px; border-radius: 12px;">
-                            <img src="assets/images/products/<?php echo htmlspecialchars($product_images[0]['image_path']); ?>"
+                            <img src="<?php echo SITE_URL; ?>/assets/images/products/<?php echo htmlspecialchars($product_images[0]['image_path']); ?>"
                                 id="product-main-image" alt="<?php echo htmlspecialchars($product['name']); ?>">
                         </div>
 
@@ -69,11 +103,11 @@ $related_products = $related_stmt->fetchAll();
                         <!-- Thumbnail Navigation -->
                         <div class="d-flex gap-2 overflow-auto pb-2">
                             <?php foreach ($product_images as $index => $img): ?>
-                                <img src="assets/images/products/<?php echo htmlspecialchars($img['image_path']); ?>"
+                                <img src="<?php echo SITE_URL; ?>/assets/images/products/<?php echo htmlspecialchars($img['image_path']); ?>"
                                     class="img-thumbnail product-thumbnail <?php echo $index === 0 ? 'active' : ''; ?>"
                                     style="width: 80px; height: 80px; object-fit: cover; cursor: pointer;"
                                     data-index="<?php echo $index; ?>"
-                                    data-src="assets/images/products/<?php echo htmlspecialchars($img['image_path']); ?>"
+                                    data-src="<?php echo SITE_URL; ?>/assets/images/products/<?php echo htmlspecialchars($img['image_path']); ?>"
                                     alt="Thumbnail <?php echo $index + 1; ?>">
                             <?php endforeach; ?>
                         </div>
@@ -81,13 +115,13 @@ $related_products = $related_stmt->fetchAll();
                         <!-- Store all images data for slider -->
                         <script>
                             const productImages = <?php echo json_encode(array_map(function ($img) {
-                                return 'assets/images/products/' . $img['image_path'];
+                                return SITE_URL . '/assets/images/products/' . $img['image_path'];
                             }, $product_images)); ?>;
                         </script>
                     <?php endif; ?>
                 <?php else: ?>
                     <div class="product-card-img-container" style="height: 400px; border-radius: 12px;">
-                        <img src="assets/images/products/<?php echo htmlspecialchars($product['image'] ?? 'placeholder.jpg'); ?>"
+                        <img src="<?php echo SITE_URL; ?>/assets/images/products/<?php echo htmlspecialchars($product['image'] ?? 'placeholder.jpg'); ?>"
                             alt="<?php echo htmlspecialchars($product['name']); ?>">
                     </div>
                 <?php endif; ?>
@@ -146,7 +180,7 @@ $related_products = $related_stmt->fetchAll();
                             <?php endif; ?>
                         </div>
                         <div class="col-auto">
-                            <a href="shop.php" class="btn btn-outline-primary btn-lg">
+                            <a href="shop" class="btn btn-outline-primary btn-lg">
                                 <i class="fas fa-arrow-left"></i> Continue Shopping
                             </a>
                         </div>
@@ -179,7 +213,7 @@ $related_products = $related_stmt->fetchAll();
                                 <?php echo htmlspecialchars($related['category']); ?>
                             </span>
                             <div class="product-card-img-container" style="height: 200px;">
-                                <img src="assets/images/products/<?php echo htmlspecialchars($related['image'] ?? 'placeholder.jpg'); ?>"
+                                <img src="<?php echo SITE_URL; ?>/assets/images/products/<?php echo htmlspecialchars($related['image'] ?? 'placeholder.jpg'); ?>"
                                     alt="<?php echo htmlspecialchars($related['name']); ?>">
                             </div>
                             <div class="card-body">
@@ -191,8 +225,8 @@ $related_products = $related_stmt->fetchAll();
                                     </span>
                                     <div><?php echo generateStarRating($related['rating']); ?></div>
                                 </div>
-                                <a href="product.php?slug=<?php echo urlencode($related['slug']); ?>" class="btn w-100"
-                                    style="background-color: #00E676; color: white; border: none;">
+                                <a href="<?php echo SITE_URL; ?>/product/<?php echo urlencode($related['slug']); ?>"
+                                    class="btn w-100" style="background-color: #00E676; color: white; border: none;">
                                     View Product
                                 </a>
                             </div>

@@ -7,7 +7,7 @@ $page_title = 'Create Account';
 
 // Redirect if already logged in
 if (isLoggedIn()) {
-    header('Location: index.php');
+    header('Location: index');
     exit;
 }
 
@@ -60,7 +60,7 @@ require_once 'includes/header.php';
                                 <i class="fas fa-check-circle fs-4 me-2"></i>
                                 <div>
                                     <h6 class="alert-heading mb-1">Registration Successful!</h6>
-                                    <p class="mb-0 small">Welcome aboard! <a href="login.php"
+                                    <p class="mb-0 small">Welcome aboard! <a href="login"
                                             class="alert-link text-decoration-underline">Log in now</a> to start shopping.
                                     </p>
                                 </div>
@@ -124,7 +124,7 @@ require_once 'includes/header.php';
                                         style="cursor: pointer;">
                                     <label class="form-check-label small user-select-none" for="terms"
                                         style="cursor: pointer;">
-                                        I agree to the <a href="terms.php"
+                                        I agree to the <a href="terms"
                                             class="text-primary fw-bold text-decoration-none">Terms & Conditions</a>
                                     </label>
                                 </div>
@@ -137,7 +137,7 @@ require_once 'includes/header.php';
                                 <!-- Login Link -->
                                 <div class="text-center">
                                     <span class="text-muted small">Already have an account?</span>
-                                    <a href="login.php" class="text-primary fw-bold text-decoration-none ms-1">Login
+                                    <a href="login" class="text-primary fw-bold text-decoration-none ms-1">Login
                                         here</a>
                                 </div>
                             </form>

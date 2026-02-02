@@ -18,36 +18,37 @@ require_once __DIR__ . '/db.php';
  * @param string $password
  * @return array ['success' => bool, 'message' => string]
  */
-function registerUser($name, $email, $password) {
+function registerUser($name, $email, $password)
+{
     global $conn;
-    
+
     // Validate inputs
     if (empty($name) || empty($email) || empty($password)) {
         return ['success' => false, 'message' => 'All fields are required'];
     }
-    
+
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return ['success' => false, 'message' => 'Invalid email format'];
     }
-    
+
     if (strlen($password) < 6) {
         return ['success' => false, 'message' => 'Password must be at least 6 characters'];
     }
-    
+
     // Check if email already exists
     $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->execute([$email]);
-    
+
     if ($stmt->fetch()) {
         return ['success' => false, 'message' => 'Email already registered'];
     }
-    
+
     // Hash password
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
-    
+
     // Insert user
     $stmt = $conn->prepare("INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)");
-    
+
     if ($stmt->execute([$name, $email, $password_hash])) {
         return ['success' => true, 'message' => 'Registration successful'];
     } else {
@@ -61,21 +62,22 @@ function registerUser($name, $email, $password) {
  * @param string $password
  * @return array ['success' => bool, 'message' => string]
  */
-function loginUser($email, $password) {
+function loginUser($email, $password)
+{
     global $conn;
-    
+
     if (empty($email) || empty($password)) {
         return ['success' => false, 'message' => 'All fields are required'];
     }
-    
+
     $stmt = $conn->prepare("SELECT id, name, email, password_hash, role FROM users WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch();
-    
+
     if (!$user) {
         return ['success' => false, 'message' => 'Invalid email or password'];
     }
-    
+
     if (password_verify($password, $user['password_hash'])) {
         // Set session variables
         $_SESSION['user_id'] = $user['id'];
@@ -83,7 +85,7 @@ function loginUser($email, $password) {
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['user_role'] = $user['role'];
         $_SESSION['logged_in'] = true;
-        
+
         return ['success' => true, 'message' => 'Login successful'];
     } else {
         return ['success' => false, 'message' => 'Invalid email or password'];
@@ -94,7 +96,8 @@ function loginUser($email, $password) {
  * Check if user is logged in
  * @return bool
  */
-function isLoggedIn() {
+function isLoggedIn()
+{
     return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
 }
 
@@ -102,7 +105,8 @@ function isLoggedIn() {
  * Check if user is admin
  * @return bool
  */
-function isAdmin() {
+function isAdmin()
+{
     return isLoggedIn() && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
 }
 
@@ -110,7 +114,8 @@ function isAdmin() {
  * Require login (redirect if not logged in)
  * @param string $redirect_to
  */
-function requireLogin($redirect_to = '/login.php') {
+function requireLogin($redirect_to = '/login')
+{
     if (!isLoggedIn()) {
         header('Location: ' . $redirect_to);
         exit;
@@ -121,7 +126,8 @@ function requireLogin($redirect_to = '/login.php') {
  * Require admin (redirect if not admin)
  * @param string $redirect_to
  */
-function requireAdmin($redirect_to = '/index.php') {
+function requireAdmin($redirect_to = '/index')
+{
     if (!isAdmin()) {
         header('Location: ' . $redirect_to);
         exit;
@@ -131,7 +137,8 @@ function requireAdmin($redirect_to = '/index.php') {
 /**
  * Logout user
  */
-function logoutUser() {
+function logoutUser()
+{
     session_unset();
     session_destroy();
 }
@@ -140,11 +147,12 @@ function logoutUser() {
  * Get current user data
  * @return array|null
  */
-function getCurrentUser() {
+function getCurrentUser()
+{
     if (!isLoggedIn()) {
         return null;
     }
-    
+
     return [
         'id' => $_SESSION['user_id'],
         'name' => $_SESSION['user_name'],

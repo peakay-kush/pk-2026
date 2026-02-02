@@ -3,7 +3,7 @@ require_once '../includes/db.php';
 
 // Redirect if already logged in as admin
 if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
-    header('Location: index.php');
+    header('Location: index');
     exit;
 }
 
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             session_write_close();
             session_start();
 
-            header('Location: index.php');
+            header('Location: index');
             exit;
         } else {
             $error = 'Invalid email or password';
@@ -173,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
 
                 <div class="text-center mt-4">
-                    <a href="../index.php" class="text-muted"><i class="fas fa-home"></i> Back to Website</a>
+                    <a href="../index" class="text-muted"><i class="fas fa-home"></i> Back to Website</a>
                 </div>
             </div>
         </div>

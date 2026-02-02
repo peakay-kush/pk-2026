@@ -1,4 +1,5 @@
-$<?php
+$
+<?php
 echo 'DEBUG: order_confirmation.php loaded<br>';
 // Enable error reporting for debugging
 ini_set('display_errors', 1);
@@ -11,10 +12,10 @@ require_once 'includes/db.php';
 // Require login
 requireLogin();
 
-$order_id = isset($_GET['order_id']) ? (int)$_GET['order_id'] : 0;
+$order_id = isset($_GET['order_id']) ? (int) $_GET['order_id'] : 0;
 
 if ($order_id === 0) {
-    redirect('dashboard.php', 'Invalid order', 'error');
+    redirect('dashboard', 'Invalid order', 'error');
 }
 
 // Fetch order details
@@ -23,7 +24,7 @@ $stmt->execute([$order_id, $_SESSION['user_id']]);
 $order = $stmt->fetch();
 
 if (!$order) {
-    redirect('dashboard.php', 'Order not found', 'error');
+    redirect('dashboard', 'Order not found', 'error');
 }
 
 // Fetch order items
@@ -66,7 +67,7 @@ $order_items = $items_stmt;
                                 </p>
                             </div>
                         </div>
-                        
+
                         <h5 class="mb-3">Order Items</h5>
                         <div class="table-responsive">
                             <table class="table">
@@ -80,40 +81,42 @@ $order_items = $items_stmt;
                                 </thead>
                                 <tbody>
                                     <?php while ($item = $order_items->fetch()): ?>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <img src="assets/images/products/<?php echo htmlspecialchars($item['image']); ?>" 
-                                                     style="width: 50px; height: 50px; object-fit: cover;" 
-                                                     class="me-2 rounded"
-                                                     alt="Product Image">
-                                                <?php echo htmlspecialchars($item['name']); ?>
-                                            </div>
-                                        </td>
-                                        <td><?php echo $item['quantity']; ?></td>
-                                        <td><?php echo formatPrice($item['price']); ?></td>
-                                        <td><?php echo formatPrice($item['price'] * $item['quantity']); ?></td>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <img src="assets/images/products/<?php echo htmlspecialchars($item['image']); ?>"
+                                                        style="width: 50px; height: 50px; object-fit: cover;"
+                                                        class="me-2 rounded" alt="Product Image">
+                                                    <?php echo htmlspecialchars($item['name']); ?>
+                                                </div>
+                                            </td>
+                                            <td><?php echo $item['quantity']; ?></td>
+                                            <td><?php echo formatPrice($item['price']); ?></td>
+                                            <td><?php echo formatPrice($item['price'] * $item['quantity']); ?></td>
+                                        </tr>
                                     <?php endwhile; ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td colspan="3" class="text-end"><strong>Total:</strong></td>
-                                        <td><strong class="text-primary"><?php echo formatPrice($order['total_amount']); ?></strong></td>
+                                        <td><strong
+                                                class="text-primary"><?php echo formatPrice($order['total_amount']); ?></strong>
+                                        </td>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
-                        
+
                         <div class="alert alert-info mt-4">
-                            <i class="fas fa-info-circle"></i> A confirmation email has been sent to <strong><?php echo htmlspecialchars($_SESSION['user_email']); ?></strong>
+                            <i class="fas fa-info-circle"></i> A confirmation email has been sent to
+                            <strong><?php echo htmlspecialchars($_SESSION['user_email']); ?></strong>
                         </div>
-                        
+
                         <div class="mt-4 d-flex gap-2 justify-content-center">
-                            <a href="dashboard.php" class="btn btn-primary">
+                            <a href="dashboard" class="btn btn-primary">
                                 <i class="fas fa-tachometer-alt"></i> Go to Dashboard
                             </a>
-                            <a href="shop.php" class="btn btn-outline-primary">
+                            <a href="shop" class="btn btn-outline-primary">
                                 <i class="fas fa-shopping-bag"></i> Continue Shopping
                             </a>
                         </div>

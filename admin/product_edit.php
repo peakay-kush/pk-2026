@@ -117,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $_SESSION['flash_message'] = $message;
         $_SESSION['flash_type'] = 'success';
-        header('Location: products.php');
+        header('Location: products');
         exit;
     } catch (Exception $e) {
         $_SESSION['flash_message'] = 'Error updating product: ' . $e->getMessage();
@@ -133,7 +133,7 @@ $product = $stmt->fetch();
 if (!$product) {
     $_SESSION['flash_message'] = 'Product not found';
     $_SESSION['flash_type'] = 'error';
-    header('Location: products.php');
+    header('Location: products');
     exit;
 }
 
@@ -150,7 +150,7 @@ $product_images = $img_stmt->fetchAll();
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="page-title mb-0"><i class="fas fa-edit"></i> Edit Product</h2>
-    <a href="products.php" class="btn btn-secondary">
+    <a href="products" class="btn btn-secondary">
         <i class="fas fa-arrow-left"></i> Back to Products
     </a>
 </div>
@@ -243,7 +243,7 @@ $product_images = $img_stmt->fetchAll();
                         <button type="submit" class="btn btn-primary btn-lg">
                             <i class="fas fa-save"></i> Update Product
                         </button>
-                        <a href="products.php" class="btn btn-secondary">
+                        <a href="products" class="btn btn-secondary">
                             <i class="fas fa-arrow-left"></i> Back to Products
                         </a>
                     </div>
@@ -266,12 +266,12 @@ $product_images = $img_stmt->fetchAll();
                         <?php echo $product['rating']; ?>/5</small>
                     <div class="mt-2">
                         <?php if ($product['featured']): ?>
-                            <a href="toggle_featured.php?id=<?php echo $product_id; ?>&toggle=0&csrf_token=<?php echo generateCSRFToken(); ?>"
+                            <a href="toggle_featured?id=<?php echo $product_id; ?>&toggle=0&csrf_token=<?php echo generateCSRFToken(); ?>"
                                 class="btn btn-sm btn-warning">
                                 <i class="fas fa-star"></i> Featured
                             </a>
                         <?php else: ?>
-                            <a href="toggle_featured.php?id=<?php echo $product_id; ?>&toggle=1&csrf_token=<?php echo generateCSRFToken(); ?>"
+                            <a href="toggle_featured?id=<?php echo $product_id; ?>&toggle=1&csrf_token=<?php echo generateCSRFToken(); ?>"
                                 class="btn btn-sm btn-outline-warning">
                                 <i class="far fa-star"></i> Mark as Featured
                             </a>
@@ -302,7 +302,7 @@ $product_images = $img_stmt->fetchAll();
                                                 <i class="fas fa-star"></i> Primary
                                             </span>
                                         <?php endif; ?>
-                                        <form method="POST" action="delete_product_image.php"
+                                        <form method="POST" action="delete_product_image"
                                             class="position-absolute bottom-0 end-0 m-1">
                                             <?php echo csrfField(); ?>
                                             <input type="hidden" name="image_id" value="<?php echo $img['id']; ?>">
@@ -330,16 +330,28 @@ $product_images = $img_stmt->fetchAll();
 </div>
 
 <!-- TinyMCE CDN -->
-<script src="https://cdn.tiny.cloud/1/qtfzaflz9y6nb7hy0dvj1uqw5uwlzk7bp4zm93whxc9nydld/tinymce/6/tinymce.min.js"
-    referrerpolicy="origin"></script>
+<script src="https://cdn.tiny.cloud/1/qtfzaflz9y6nb7hy0dvj1uqw5uwlzk7bp4zm93whxc9nydld/tinymce/8/tinymce.min.js"
+    referrerpolicy="origin" crossorigin="anonymous"></script>
 
 <script>
     // Initialize TinyMCE
     tinymce.init({
         selector: '#description',
-        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat | codesample',
-        height: 400,
+        plugins: [
+            // Core editing features
+            'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+            // Premium features
+            'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'advtemplate', 'ai', 'uploadcare', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown', 'importword', 'exportword', 'exportpdf'
+        ],
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography uploadcare | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | codesample',
+        tinycomments_mode: 'embedded',
+        tinycomments_author: 'Author name',
+        mergetags_list: [
+            { value: 'First.Name', title: 'First Name' },
+            { value: 'Email', title: 'Email' },
+        ],
+        ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+        uploadcare_public_key: 'cf36b40869233f98bb88',
         codesample_languages: [
             { text: 'HTML/XML', value: 'markup' },
             { text: 'JavaScript', value: 'javascript' },

@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 // Insert new image
                 $stmt = $conn->prepare("INSERT INTO hero_images (category, title, image_path, is_active) VALUES (?, ?, ?, 1)");
                 $stmt->execute([$category, $title, $filename]);
-                header('Location: hero_images.php?success=1');
+                header('Location: hero_images?success=1');
                 exit;
             }
         }
@@ -48,7 +48,7 @@ if (isset($_GET['delete'])) {
         $stmt = $conn->prepare("DELETE FROM hero_images WHERE id = ?");
         $stmt->execute([$id]);
     }
-    header('Location: hero_images.php');
+    header('Location: hero_images');
     exit;
 }
 
@@ -70,7 +70,7 @@ if (isset($_GET['activate'])) {
         $stmt = $conn->prepare("UPDATE hero_images SET is_active = 1 WHERE id = ?");
         $stmt->execute([$id]);
     }
-    header('Location: hero_images.php');
+    header('Location: hero_images');
     exit;
 }
 
@@ -103,7 +103,7 @@ require_once 'header.php';
         ?>
         <div class="col-md-6">
             <div class="card h-100">
-                <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                     <h5 class="mb-0"><i class="fas fa-image"></i> <?php echo $cat_name; ?></h5>
                     <button class="btn btn-success btn-sm ms-auto" data-bs-toggle="modal"
                         data-bs-target="#uploadModal<?php echo $cat_key; ?>">
@@ -121,7 +121,7 @@ require_once 'header.php';
                                     <strong><?php echo htmlspecialchars($active_image['title']); ?></strong>
                                     <span class="badge bg-success ms-2">Active</span>
                                 </div>
-                                <a href="hero_images.php?delete=<?php echo $active_image['id']; ?>&csrf_token=<?php echo generateCSRFToken(); ?>"
+                                <a href="hero_images?delete=<?php echo $active_image['id']; ?>&csrf_token=<?php echo generateCSRFToken(); ?>"
                                     class="btn btn-sm btn-danger"
                                     onclick="return confirm('Are you sure you want to delete this hero image?');">
                                     <i class="fas fa-trash"></i> Delete
@@ -140,7 +140,7 @@ require_once 'header.php';
                         <h6 class="mb-3 text-muted text-uppercase small fw-bold">History (<?php echo count($images); ?>)</h6>
                         <div class="row g-2">
                             <?php foreach ($images as $image): ?>
-                                <div class="col-4">
+                                <div class="col-6 col-md-4">
                                     <div
                                         class="card h-100 <?php echo $image['is_active'] ? 'border-success' : 'border-0 bg-light'; ?>">
                                         <img src="../assets/images/hero/<?php echo htmlspecialchars($image['image_path']); ?>"
@@ -153,12 +153,12 @@ require_once 'header.php';
                                             </small>
                                             <div class="d-grid gap-1">
                                                 <?php if (!$image['is_active']): ?>
-                                                    <a href="hero_images.php?activate=<?php echo $image['id']; ?>&csrf_token=<?php echo generateCSRFToken(); ?>"
+                                                    <a href="hero_images?activate=<?php echo $image['id']; ?>&csrf_token=<?php echo generateCSRFToken(); ?>"
                                                         class="btn btn-sm btn-outline-success py-0" style="font-size: 0.7rem;">
                                                         Activate
                                                     </a>
                                                 <?php endif; ?>
-                                                <a href="hero_images.php?delete=<?php echo $image['id']; ?>&csrf_token=<?php echo generateCSRFToken(); ?>"
+                                                <a href="hero_images?delete=<?php echo $image['id']; ?>&csrf_token=<?php echo generateCSRFToken(); ?>"
                                                     class="btn btn-sm btn-outline-danger py-0" style="font-size: 0.7rem;"
                                                     onclick="return confirm('Delete this image?');">
                                                     <i class="fas fa-trash"></i>

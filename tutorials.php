@@ -45,13 +45,13 @@ $categories = $conn->query("SELECT DISTINCT category FROM tutorials ORDER BY cat
                         </h5>
                     </div>
                     <div class="list-group list-group-flush">
-                        <a href="tutorials.php"
+                        <a href="tutorials"
                             class="list-group-item list-group-item-action py-3 <?php echo !$category ? 'active fw-bold' : ''; ?>"
                             style="<?php echo !$category ? 'background-color: #E3F2FD; color: var(--primary-color); border-left: 4px solid var(--primary-color);' : 'color: #555;'; ?>">
                             All Tutorials
                         </a>
                         <?php foreach ($categories as $cat): ?>
-                            <a href="tutorials.php?category=<?php echo urlencode($cat['category']); ?>"
+                            <a href="tutorials?category=<?php echo urlencode($cat['category']); ?>"
                                 class="list-group-item list-group-item-action py-3 <?php echo $category == $cat['category'] ? 'active fw-bold' : ''; ?>"
                                 style="<?php echo $category == $cat['category'] ? 'background-color: #E3F2FD; color: var(--primary-color); border-left: 4px solid var(--primary-color);' : 'color: #555;'; ?>">
                                 <?php echo htmlspecialchars($cat['category']); ?>
@@ -95,8 +95,7 @@ $categories = $conn->query("SELECT DISTINCT category FROM tutorials ORDER BY cat
                                                 <i class="fas fa-calendar-alt me-2" style="color: #999;"></i>
                                                 <?php echo formatDate($tutorial['created_at']); ?>
                                             </small>
-                                            <a href="tutorial.php?slug=<?php echo urlencode($tutorial['slug']); ?>"
-                                                class="btn fw-bold"
+                                            <a href="tutorial/<?php echo urlencode($tutorial['slug']); ?>" class="btn fw-bold"
                                                 style="background-color: #00E676; color: #000; border-radius: 6px; padding: 0.5rem 1.2rem; font-size: 0.9rem;">
                                                 Read Tutorial <i class="fas fa-arrow-right ms-1"></i>
                                             </a>
@@ -121,7 +120,7 @@ $categories = $conn->query("SELECT DISTINCT category FROM tutorials ORDER BY cat
     <div class="container text-center">
         <h2>Need Help with a Specific Project?</h2>
         <p class="lead mb-4">Get personalized guidance from our experts</p>
-        <a href="contact.php" class="btn btn-lg"><i class="fas fa-envelope"></i> Contact Us</a>
+        <a href="contact" class="btn btn-lg"><i class="fas fa-envelope"></i> Contact Us</a>
     </div>
 </section>
 

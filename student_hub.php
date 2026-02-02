@@ -61,7 +61,7 @@ require_once 'includes/header.php';
                     </ul>
                 </div>
                 <div class="col-md-3 text-center">
-                    <a href="contact.php?service=Project Consultation" class="btn btn-accent btn-lg">Book
+                    <a href="contact?service=Project Consultation" class="btn btn-accent btn-lg">Book
                         Consultation</a>
                 </div>
             </div>
@@ -87,7 +87,7 @@ require_once 'includes/header.php';
                     </ul>
                 </div>
                 <div class="col-md-3 text-center">
-                    <a href="tutorials.php" class="btn btn-accent btn-lg">Browse Tutorials</a>
+                    <a href="tutorials" class="btn btn-accent btn-lg">Browse Tutorials</a>
                 </div>
             </div>
         </div>
@@ -112,7 +112,7 @@ require_once 'includes/header.php';
                     </ul>
                 </div>
                 <div class="col-md-3 text-center">
-                    <a href="contact.php?service=Simulation Support" class="btn btn-accent btn-lg">Get Help</a>
+                    <a href="contact?service=Simulation Support" class="btn btn-accent btn-lg">Get Help</a>
                 </div>
             </div>
         </div>
@@ -137,7 +137,7 @@ require_once 'includes/header.php';
                     </ul>
                 </div>
                 <div class="col-md-3 text-center">
-                    <a href="contact.php?service=AutoCAD Assistance" class="btn btn-accent btn-lg">Request Drawing</a>
+                    <a href="contact?service=AutoCAD Assistance" class="btn btn-accent btn-lg">Request Drawing</a>
                 </div>
             </div>
         </div>
@@ -162,7 +162,7 @@ require_once 'includes/header.php';
                     </ul>
                 </div>
                 <div class="col-md-3 text-center">
-                    <a href="contact.php?service=Custom Project Kit" class="btn btn-accent btn-lg">Order Kit</a>
+                    <a href="contact?service=Custom Project Kit" class="btn btn-accent btn-lg">Order Kit</a>
                 </div>
             </div>
         </div>
@@ -357,10 +357,10 @@ require_once 'includes/header.php';
         <h2>Ready to Excel in Your Project?</h2>
         <p class="lead mb-4">Let's work together to bring your ideas to life</p>
         <div class="d-flex flex-wrap justify-content-center gap-3">
-            <a href="contact.php" class="btn btn-lg btn-primary" style="border-radius: 50px; padding: 0.8rem 2rem;">
+            <a href="contact" class="btn btn-lg btn-primary" style="border-radius: 50px; padding: 0.8rem 2rem;">
                 <i class="fas fa-envelope me-2"></i> Contact Us
             </a>
-            <a href="shop.php" class="btn btn-lg btn-outline-light" style="border-radius: 50px; padding: 0.8rem 2rem;">
+            <a href="shop" class="btn btn-lg btn-outline-light" style="border-radius: 50px; padding: 0.8rem 2rem;">
                 <i class="fas fa-shopping-bag me-2"></i> Shop Components
             </a>
         </div>

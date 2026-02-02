@@ -13,10 +13,10 @@ require_once 'includes/header.php';
                 and is working to resolve it.</p>
 
             <div class="d-flex justify-content-center gap-3">
-                <a href="index.php" class="btn btn-primary btn-lg rounded-pill px-5">
+                <a href="index" class="btn btn-primary btn-lg rounded-pill px-5">
                     <i class="fas fa-home me-2"></i>Return Home
                 </a>
-                <a href="contact.php" class="btn btn-outline-secondary btn-lg rounded-pill px-5">
+                <a href="contact" class="btn btn-outline-secondary btn-lg rounded-pill px-5">
                     <i class="fas fa-envelope me-2"></i>Contact Support
                 </a>
             </div>

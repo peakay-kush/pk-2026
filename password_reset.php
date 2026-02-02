@@ -82,7 +82,7 @@ if ($token) {
                         <div class="alert alert-success text-center">
                             <i class="fas fa-check-circle fa-2x mb-2 text-success"></i><br>
                             Your password has been reset.<br>
-                            <a href="index.php" class="btn btn-success mt-3 w-100">Go to Home</a>
+                            <a href="index" class="btn btn-success mt-3 w-100">Go to Home</a>
                         </div>
                     <?php elseif ($error): ?>
                         <div class="alert alert-danger text-center">
