@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category = trim($_POST['category']);
     $stock = (int) $_POST['stock'];
     $rating = (float) $_POST['rating'];
+    $slug = generateSlug($name);
     $image = trim($_POST['current_image']); // Keep current image by default
 
     $upload_success = false;
@@ -105,8 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $stmt = $conn->prepare("UPDATE products SET name = ?, description = ?, price = ?, category = ?, stock = ?, rating = ?, image = ? WHERE id = ?");
-        $result = $stmt->execute([$name, $description, $price, $category, $stock, $rating, $image, $product_id]);
+        $stmt = $conn->prepare("UPDATE products SET name = ?, slug = ?, description = ?, price = ?, category = ?, stock = ?, rating = ?, image = ? WHERE id = ?");
+        $result = $stmt->execute([$name, $slug, $description, $price, $category, $stock, $rating, $image, $product_id]);
 
         $message = 'Product updated successfully!';
         if ($images_uploaded > 0) {
@@ -330,20 +331,17 @@ $product_images = $img_stmt->fetchAll();
 </div>
 
 <!-- TinyMCE CDN -->
-<script src="https://cdn.tiny.cloud/1/qtfzaflz9y6nb7hy0dvj1uqw5uwlzk7bp4zm93whxc9nydld/tinymce/8/tinymce.min.js"
-    referrerpolicy="origin" crossorigin="anonymous"></script>
+<script src="https://cdn.tiny.cloud/1/kc5p26fenywbh8lgox87s6w0wx2q592j6dgxby5se3cikeku/tinymce/7/tinymce.min.js"
+    referrerpolicy="origin"></script>
 
 <script>
     // Initialize TinyMCE
     tinymce.init({
         selector: '#description',
         plugins: [
-            // Core editing features
-            'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-            // Premium features
-            'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'advtemplate', 'ai', 'uploadcare', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown', 'importword', 'exportword', 'exportpdf'
+            'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount', 'image', 'code'
         ],
-        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography uploadcare | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | codesample',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat | codesample | code',
         tinycomments_mode: 'embedded',
         tinycomments_author: 'Author name',
         mergetags_list: [

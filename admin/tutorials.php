@@ -446,8 +446,8 @@ $tutorials = $conn->query("SELECT * FROM tutorials ORDER BY created_at DESC")->f
     </div>
 </div>
 
-<script src="https://cdn.tiny.cloud/1/qtfzaflz9y6nb7hy0dvj1uqw5uwlzk7bp4zm93whxc9nydld/tinymce/8/tinymce.min.js"
-    referrerpolicy="origin" crossorigin="anonymous"></script>
+<script src="https://cdn.tiny.cloud/1/kc5p26fenywbh8lgox87s6w0wx2q592j6dgxby5se3cikeku/tinymce/7/tinymce.min.js"
+    referrerpolicy="origin"></script>
 
 <script>
     // Global tutorial data
@@ -459,12 +459,9 @@ $tutorials = $conn->query("SELECT * FROM tutorials ORDER BY created_at DESC")->f
             tinymce.init({
                 selector: '#tutorialContent',
                 plugins: [
-                    // Core editing features
-                    'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-                    // Premium features
-                    'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'advtemplate', 'ai', 'uploadcare', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown', 'importword', 'exportword', 'exportpdf'
+                    'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount', 'image', 'code'
                 ],
-                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography uploadcare | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | codesample',
+                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat | codesample | code',
                 tinycomments_mode: 'embedded',
                 tinycomments_author: 'Author name',
                 mergetags_list: [

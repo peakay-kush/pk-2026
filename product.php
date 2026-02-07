@@ -6,7 +6,7 @@ require_once 'includes/functions.php';
 $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
 
 if (empty($slug)) {
-    header('Location: shop');
+    header('Location: ' . SITE_URL . '/shop');
     exit;
 }
 
@@ -15,7 +15,7 @@ $stmt->execute([$slug]);
 $product = $stmt->fetch();
 
 if (!$product) {
-    header('Location: shop');
+    header('Location: ' . SITE_URL . '/shop');
     exit;
 }
 
@@ -157,7 +157,7 @@ $related_products = $related_stmt->fetchAll();
 
                 <hr class="my-4">
 
-                <form method="POST" action="cart_action.php" class="mb-4" id="addToCartForm">
+                <form method="POST" action="<?php echo SITE_URL; ?>/cart_action.php" class="mb-4" id="addToCartForm">
                     <?php echo csrfField(); ?>
                     <input type="hidden" name="action" value="add">
                     <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
@@ -180,7 +180,7 @@ $related_products = $related_stmt->fetchAll();
                             <?php endif; ?>
                         </div>
                         <div class="col-auto">
-                            <a href="shop" class="btn btn-outline-primary btn-lg">
+                            <a href="<?php echo SITE_URL; ?>/shop" class="btn btn-outline-primary btn-lg">
                                 <i class="fas fa-arrow-left"></i> Continue Shopping
                             </a>
                         </div>

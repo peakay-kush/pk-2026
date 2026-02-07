@@ -95,6 +95,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
 
     <script>
         window.csrfToken = '<?php echo generateCSRFToken(); ?>';
+        window.SITE_URL = '<?php echo SITE_URL; ?>';
     </script>
 
     <!-- Global Structured Data -->

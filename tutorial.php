@@ -7,7 +7,7 @@ require_once 'includes/functions.php';
 $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
 
 if (empty($slug)) {
-    header('Location: tutorials.php');
+    header('Location: ' . SITE_URL . '/tutorials');
     exit;
 }
 
@@ -15,7 +15,7 @@ $stmt = $conn->prepare("SELECT * FROM tutorials WHERE slug = ?");
 $stmt->execute([$slug]);
 
 if ($stmt->rowCount() === 0) {
-    header('Location: tutorials.php');
+    header('Location: ' . SITE_URL . '/tutorials');
     exit;
 }
 
@@ -281,7 +281,7 @@ $related_tutorials = $related_stmt;
     <div class="container text-center">
         <h2>Need Components for This Project?</h2>
         <p class="lead mb-4">Browse our shop for all the parts you need</p>
-        <a href="shop" class="btn btn-lg"><i class="fas fa-shopping-bag"></i> Visit Shop</a>
+        <a href="<?php echo SITE_URL; ?>/shop" class="btn btn-lg"><i class="fas fa-shopping-bag"></i> Visit Shop</a>
     </div>
 </section>
 

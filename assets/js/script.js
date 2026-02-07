@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             const productId = this.getAttribute('data-product-id');
 
-            fetch(`favorites_handler.php?action=add&id=${productId}&ajax=1`)
+            fetch(`${window.SITE_URL}/favorites_handler.php?action=add&id=${productId}&ajax=1`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const productName = this.getAttribute('data-product-name');
 
             // Send AJAX request to add to cart
-            fetch('cart_action.php', {
+            fetch(`${window.SITE_URL}/cart_action.php`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Convert FormData to URLSearchParams for x-www-form-urlencoded
             const params = new URLSearchParams(formData);
 
-            fetch('cart_action.php', {
+            fetch(`${window.SITE_URL}/cart_action.php`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            fetch('cart_action.php', {
+            fetch(`${window.SITE_URL}/cart_action.php`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const productId = this.getAttribute('data-product-id');
 
             if (confirm('Remove this item from cart?')) {
-                fetch('cart_action.php', {
+                fetch(`${window.SITE_URL}/cart_action.php`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -335,7 +335,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (clearCartBtn) {
         clearCartBtn.addEventListener('click', function () {
             if (confirm('Are you sure you want to clear your entire cart?')) {
-                fetch('cart_action.php', {
+                fetch(`${window.SITE_URL}/cart_action.php`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
